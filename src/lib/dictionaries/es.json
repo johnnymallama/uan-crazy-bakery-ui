@@ -1,0 +1,147 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "order": "Ordenar",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión",
+    "signUp": "Registrarse"
+  },
+  "home": {
+    "hero": {
+      "title": "Bienvenido a Crazy Bakery",
+      "subtitle": "Donde cada bocado es un pedazo de cielo. Productos recién horneados, elaborados con amor y los mejores ingredientes.",
+      "cta": "Ordena Ahora"
+    },
+    "creations": {
+      "title": "Nuestras Creaciones",
+      "subtitle": "Un vistazo a la magia que horneamos todos los días."
+    }
+  },
+  "order": {
+    "title": "¡Próximamente!",
+    "description": "Nuestro sistema de pedidos en línea todavía está en el horno. Estamos trabajando duro para ofrecerte una experiencia de pedido perfecta.",
+    "backToHome": "Volver al Inicio"
+  },
+  "contact": {
+    "title": "Ponte en Contacto",
+    "description": "¡Nos encantaría saber de ti! Si tienes una pregunta sobre nuestros productos, precios o cualquier otra cosa, nuestro equipo está listo para responder a todas tus preguntas.",
+    "email": {
+      "title": "Correo Electrónico",
+      "description": "Nuestra bandeja de entrada siempre está abierta. Te responderemos lo antes posible."
+    },
+    "phone": {
+      "title": "Teléfono",
+      "description": "Llámanos durante el horario comercial para una respuesta más rápida."
+    },
+    "kitchen": {
+      "title": "Nuestra Cocina",
+      "directions": "Obtener Direcciones"
+    }
+  },
+  "contactForm": {
+    "title": "Envíanos un Mensaje",
+    "description": "Completa el formulario a continuación y nos pondremos en contacto contigo.",
+    "name": {
+      "label": "Tu Nombre",
+      "placeholder": "Juan Pérez"
+    },
+    "email": {
+      "label": "Tu Correo Electrónico",
+      "placeholder": "tu@ejemplo.com"
+    },
+    "message": {
+      "label": "Tu Mensaje",
+      "placeholder": "Dinos cómo podemos ayudarte..."
+    },
+    "submit": "Enviar Mensaje",
+    "toast": {
+      "title": "¡Mensaje Enviado!",
+      "description": "Gracias por contactarnos. Te responderemos pronto."
+    },
+    "validation": {
+      "nameMin": "El nombre debe tener al menos 2 caracteres.",
+      "email": "Por favor, introduce una dirección de correo electrónico válida.",
+      "messageMin": "El mensaje debe tener al menos 10 caracteres.",
+      "messageMax": "El mensaje no puede exceder los 500 caracteres."
+    }
+  },
+  "loginForm": {
+    "title": "¡Bienvenido de Nuevo!",
+    "description": "Inicia sesión en tu cuenta para continuar",
+    "email": {
+      "label": "Correo Electrónico",
+      "placeholder": "tu@ejemplo.com"
+    },
+    "password": {
+      "label": "Contraseña"
+    },
+    "submit": "Iniciar Sesión",
+    "separator": "O continuar con",
+    "google": "Iniciar sesión con Google",
+    "noAccount": "¿No tienes una cuenta?",
+    "signUp": "Regístrate",
+    "validation": {
+      "email": "Por favor, introduce una dirección de correo electrónico válida.",
+      "password": "La contraseña debe tener al menos 8 caracteres."
+    }
+  },
+  "registerForm": {
+    "title": "Crear una Cuenta",
+    "description": "Únete a Crazy Bakery para empezar a ordenar",
+    "name": {
+      "label": "Nombre",
+      "placeholder": "Tu Nombre"
+    },
+    "email": {
+      "label": "Correo Electrónico",
+      "placeholder": "tu@ejemplo.com"
+    },
+    "password": {
+      "label": "Contraseña"
+    },
+    "submit": "Crear Cuenta",
+    "hasAccount": "¿Ya tienes una cuenta?",
+    "login": "Iniciar Sesión",
+    "toast": {
+      "title": "¡Cuenta Creada!",
+      "description": "¡Bienvenido a Crazy Bakery! Por favor, inicia sesión para continuar."
+    },
+    "validation": {
+      "name": "El nombre debe tener al menos 2 caracteres.",
+      "email": "Por favor, introduce una dirección de correo electrónico válida.",
+      "password": "La contraseña debe tener al menos 8 caracteres."
+    }
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "welcome": "Bienvenido a la Política de Privacidad de Crazy Bakery. Esta es una página de marcador de posición. El contenido de la política de privacidad se agregará aquí.",
+    "info": {
+      "title": "Información que Recopilamos",
+      "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla."
+    },
+    "howWeUse": {
+      "title": "Cómo Usamos tu Información",
+      "p1": "Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero."
+    },
+    "sharing": {
+      "title": "Compartir tu Información",
+      "p1": "Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor."
+    }
+  },
+  "terms": {
+    "title": "Términos de Servicio",
+    "welcome": "Bienvenido a los Términos de Servicio de Crazy Bakery. Esta es una página de marcador de posición. El contenido de los términos de servicio se agregará aquí.",
+    "acceptance": {
+      "title": "1. Aceptación de los Términos",
+      "p1": "Al acceder o utilizar nuestros servicios, aceptas estar sujeto a estos términos. Si no estás de acuerdo con alguna parte de los términos, entonces no puedes acceder al servicio."
+    },
+    "orders": {
+      "title": "2. Pedidos y Pago",
+      "p1": "Todos los pedidos están sujetos a aceptación y disponibilidad. Los precios de nuestros productos están sujetos a cambios sin previo aviso. Nos reservamos el derecho en cualquier momento de modificar o descontinuar el Servicio."
+    },
+    "intellectualProperty": {
+      "title": "3. Propiedad Intelectual",
+      "p1": "El Servicio and su contenido original, características y funcionalidad son y seguirán siendo propiedad exclusiva de Crazy Bakery y sus licenciantes."
+    }
+  }
+}

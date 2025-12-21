@@ -1,0 +1,34 @@
+{
+  "placeholderImages": [
+    {
+      "id": "carousel-1",
+      "description": "A delicious looking multi-layered cake with chocolate icing and berries on top.",
+      "imageUrl": "https://images.unsplash.com/photo-1517427294546-5aa121f68e8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjaG9jb2xhdGUlMjBjYWtlfGVufDB8fHx8MTc2NjIxNTAzMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chocolate cake"
+    },
+    {
+      "id": "carousel-2",
+      "description": "A batch of freshly baked croissants on a wooden board.",
+      "imageUrl": "https://images.unsplash.com/photo-1761506774452-11827a23de45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxmcmVzaCUyMGNyb2lzc2FudHN8ZW58MHx8fHwxNzY2MTg4ODY5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fresh croissants"
+    },
+    {
+      "id": "carousel-3",
+      "description": "Colorful macarons arranged neatly in rows.",
+      "imageUrl": "https://images.unsplash.com/photo-1714387278170-d560a9b6f08a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29sb3JmdWwlMjBtYWNhcm9uc3xlbnwwfHx8fDE3NjYxODg4NzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "colorful macarons"
+    },
+    {
+      "id": "carousel-4",
+      "description": "A sourdough bread loaf with a crispy crust.",
+      "imageUrl": "https://images.unsplash.com/photo-1670843837159-ddae2ec115d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwYnJlYWR8ZW58MHx8fHwxNzY2MjQwMzc0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "artisan bread"
+    },
+    {
+      "id": "carousel-5",
+      "description": "A variety of donuts with different glazes and sprinkles.",
+      "imageUrl": "https://images.unsplash.com/photo-1696273337393-9da06bb31f8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb2xvcmZ1bCUyMGRvbnV0c3xlbnwwfHx8fDE3NjYyNDQ5NjR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "colorful donuts"
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "navigation": {
+    "home": "Home",
+    "order": "Order",
+    "contact": "Contact",
+    "login": "Login",
+    "signUp": "Sign Up"
+  },
+  "home": {
+    "hero": {
+      "title": "Welcome to Crazy Bakery",
+      "subtitle": "Where every bite is a piece of heaven. Freshly baked goods, crafted with love and the finest ingredients.",
+      "cta": "Order Now"
+    },
+    "creations": {
+      "title": "Our Creations",
+      "subtitle": "A glimpse into the magic we bake every day."
+    }
+  },
+  "order": {
+    "title": "Coming Soon!",
+    "description": "Our online ordering system is still in the oven. We're working hard to bring you a seamless ordering experience.",
+    "backToHome": "Back to Home"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "description": "We'd love to hear from you! Whether you have a question about our products, pricing, or anything else, our team is ready to answer all your questions.",
+    "email": {
+      "title": "Email",
+      "description": "Our inbox is always open. We'll get back to you as soon as possible."
+    },
+    "phone": {
+      "title": "Phone",
+      "description": "Give us a call during business hours for a quicker response."
+    },
+    "kitchen": {
+      "title": "Our Kitchen",
+      "directions": "Get Directions"
+    }
+  },
+  "contactForm": {
+    "title": "Send us a Message",
+    "description": "Fill out the form below and we will get back to you.",
+    "name": {
+      "label": "Your Name",
+      "placeholder": "John Doe"
+    },
+    "email": {
+      "label": "Your Email",
+      "placeholder": "you@example.com"
+    },
+    "message": {
+      "label": "Your Message",
+      "placeholder": "Tell us how we can help..."
+    },
+    "submit": "Send Message",
+    "toast": {
+      "title": "Message Sent!",
+      "description": "Thanks for reaching out. We'll get back to you soon."
+    },
+    "validation": {
+      "nameMin": "Name must be at least 2 characters.",
+      "email": "Please enter a valid email address.",
+      "messageMin": "Message must be at least 10 characters.",
+      "messageMax": "Message cannot exceed 500 characters."
+    }
+  },
+  "loginForm": {
+    "title": "Welcome Back!",
+    "description": "Sign in to your account to continue",
+    "email": {
+      "label": "Email",
+      "placeholder": "you@example.com"
+    },
+    "password": {
+      "label": "Password"
+    },
+    "submit": "Login",
+    "separator": "Or continue with",
+    "google": "Sign in with Google",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "validation": {
+      "email": "Please enter a valid email address.",
+      "password": "Password must be at least 8 characters."
+    }
+  },
+  "registerForm": {
+    "title": "Create an Account",
+    "description": "Join Crazy Bakery to start ordering",
+    "name": {
+      "label": "Name",
+      "placeholder": "Your Name"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "you@example.com"
+    },
+    "password": {
+      "label": "Password"
+    },
+    "submit": "Create Account",
+    "hasAccount": "Already have an account?",
+    "login": "Login",
+    "toast": {
+      "title": "Account Created!",
+      "description": "Welcome to Crazy Bakery! Please login to continue."
+    },
+    "validation": {
+      "name": "Name must be at least 2 characters.",
+      "email": "Please enter a valid email address.",
+      "password": "Password must be at least 8 characters."
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "welcome": "Welcome to Crazy Bakery's Privacy Policy. This is a placeholder page. The content for the privacy policy will be added here.",
+    "info": {
+      "title": "Information We Collect",
+      "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla."
+    },
+    "howWeUse": {
+      "title": "How We Use Your Information",
+      "p1": "Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero."
+    },
+    "sharing": {
+      "title": "Sharing Your Information",
+      "p1": "Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor."
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "welcome": "Welcome to Crazy Bakery's Terms of Service. This is a placeholder page. The content for the terms of service will be added here.",
+    "acceptance": {
+      "title": "1. Acceptance of Terms",
+      "p1": "By accessing or using our services, you agree to be bound by these terms. If you disagree with any part of the terms, then you may not access the service."
+    },
+    "orders": {
+      "title": "2. Orders and Payment",
+      "p1": "All orders are subject to acceptance and availability. Prices for our products are subject to change without notice. We reserve the right at any time to modify or discontinue the Service."
+    },
+    "intellectualProperty": {
+      "title": "3. Intellectual Property",
+      "p1": "The Service and its original content, features, and functionality are and will remain the exclusive property of Crazy Bakery and its licensors."
+    }
+  }
+}
