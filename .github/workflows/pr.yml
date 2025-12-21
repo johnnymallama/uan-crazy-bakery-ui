@@ -3,14 +3,30 @@ name: "CI — Pull Request"
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+  # Opcional: descomenta si quieres también que corra en pushes a ramas feature/*
+  # push:
+  #   branches:
+  #     - 'feature/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  checks: write
 
 jobs:
   ci:
     name: CI — Pull Request
     runs-on: ubuntu-latest
+    env:
+      CI: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -18,19 +34,21 @@ jobs:
           node-version: "20"
           cache: "npm"
 
+      - name: Show node / npm versions
+        run: |
+          node --version
+          npm --version
+
       - name: Install dependencies
         run: npm ci
 
       - name: Lint
         run: npm run lint
-        env:
-          CI: true
 
       - name: Type check
         run: npm run typecheck
 
       - name: Run tests (CI)
-        # Llamamos a test:ci y añadimos flags para CI
         run: npm run test:ci -- --ci --runInBand
 
       - name: Build
