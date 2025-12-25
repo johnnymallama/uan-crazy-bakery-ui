@@ -4,7 +4,9 @@
     "order": "Ordenar",
     "contact": "Contacto",
     "login": "Iniciar Sesión",
-    "signUp": "Registrarse"
+    "signUp": "Registrarse",
+    "myAccount": "Mi Cuenta",
+    "logout": "Cerrar Sesión"
   },
   "home": {
     "hero": {
@@ -76,10 +78,14 @@
       "label": "Contraseña"
     },
     "submit": "Iniciar Sesión",
-    "separator": "O continuar con",
-    "google": "Iniciar sesión con Google",
     "noAccount": "¿No tienes una cuenta?",
     "signUp": "Regístrate",
+    "toast": {
+      "error": {
+        "title": "Credenciales Inválidas",
+        "description": "Por favor, verifica tu correo electrónico y contraseña e intenta de nuevo."
+      }
+    },
     "validation": {
       "email": "Por favor, introduce una dirección de correo electrónico válida.",
       "password": "La contraseña debe tener al menos 8 caracteres."
@@ -99,6 +105,9 @@
     "password": {
       "label": "Contraseña"
     },
+    "confirmPassword": {
+      "label": "Confirmar Contraseña"
+    },
     "submit": "Crear Cuenta",
     "hasAccount": "¿Ya tienes una cuenta?",
     "login": "Iniciar Sesión",
@@ -109,7 +118,8 @@
     "validation": {
       "name": "El nombre debe tener al menos 2 caracteres.",
       "email": "Por favor, introduce una dirección de correo electrónico válida.",
-      "password": "La contraseña debe tener al menos 8 caracteres."
+      "password": "La contraseña debe tener al menos 8 caracteres.",
+      "passwordMatch": "Las contraseñas no coinciden."
     }
   },
   "privacy": {

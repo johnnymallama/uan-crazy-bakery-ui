@@ -1,9 +1,12 @@
-"use client";
+'use client';
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,11 +28,14 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Locale } from "../../../i18n-config";
 import type { getDictionary } from "@/lib/get-dictionary";
+import { auth } from "@/lib/firebase";
 
 type Dictionary = Awaited<ReturnType<typeof getDictionary>>['registerForm'];
 
 export function RegisterForm({ dictionary: t, lang }: { dictionary: Dictionary, lang: Locale }) {
   const { toast } = useToast();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const formSchema = z.object({
     name: z.string().min(2, {
@@ -41,6 +47,10 @@ export function RegisterForm({ dictionary: t, lang }: { dictionary: Dictionary, 
     password: z.string().min(8, {
       message: t.validation.password,
     }),
+    confirmPassword: z.string(),
+  }).refine((data) => data.password === data.confirmPassword, {
+    message: t.validation.passwordMatch,
+    path: ["confirmPassword"],
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -49,16 +59,28 @@ export function RegisterForm({ dictionary: t, lang }: { dictionary: Dictionary, 
       name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    // TODO: Implement registration logic
-    toast({
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    try {
+      await createUserWithEmailAndPassword(auth, values.email, values.password);
+      toast({
         title: t.toast.title,
         description: t.toast.description,
       });
+      router.push(`/${lang}`);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "An unexpected error occurred.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   if (!t) return null;
@@ -66,7 +88,7 @@ export function RegisterForm({ dictionary: t, lang }: { dictionary: Dictionary, 
   return (
     <Card className="w-full max-w-md shadow-2xl">
       <CardHeader className="text-center">
-        <CardTitle className="text-3xl font-headline">{t.title}</CardTitle>
+        <CardTitle className="text-3xl font-headline" role="heading">{t.title}</CardTitle>
         <CardDescription>{t.description}</CardDescription>
       </CardHeader>
       <CardContent>
@@ -111,8 +133,21 @@ export function RegisterForm({ dictionary: t, lang }: { dictionary: Dictionary, 
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-              {t.submit}
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t.confirmPassword.label}</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="********" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isLoading}>
+              {isLoading ? "Cargando..." : t.submit}
             </Button>
           </form>
         </Form>
