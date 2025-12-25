@@ -105,6 +105,9 @@
     "password": {
       "label": "Password"
     },
+    "confirmPassword": {
+      "label": "Confirm Password"
+    },
     "submit": "Create Account",
     "hasAccount": "Already have an account?",
     "login": "Login",
@@ -115,7 +118,8 @@
     "validation": {
       "name": "Name must be at least 2 characters.",
       "email": "Please enter a valid email address.",
-      "password": "Password must be at least 8 characters."
+      "password": "Password must be at least 8 characters.",
+      "passwordMatch": "Passwords do not match."
     }
   },
   "privacy": {
