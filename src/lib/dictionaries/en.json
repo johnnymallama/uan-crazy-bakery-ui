@@ -207,7 +207,9 @@
           "phone": "Phone",
           "address": "Address",
           "department": "Department",
-          "city": "City"
+          "city": "City",
+          "select_department": "Select a department",
+          "select_city": "Select a city"
         },
         "buttons": {
           "cancel": "Cancel",

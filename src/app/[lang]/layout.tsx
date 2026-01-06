@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Locale } from '../../../i18n-config';
 import { SessionProvider } from '@/context/session-provider';
 import { getDictionary } from '@/lib/get-dictionary';
+import { LocationProvider } from '@/context/location-provider';
 
 export default async function LangLayout({
   children,
@@ -16,10 +17,12 @@ export default async function LangLayout({
 
   return (
     <SessionProvider>
-      <Header lang={params.lang} dictionary={dictionary.navigation} />
-      <main className="flex-grow">{children}</main>
-      <Footer lang={params.lang} />
-      <Toaster />
+      <LocationProvider>
+        <Header lang={params.lang} dictionary={dictionary.navigation} />
+        <main className="flex-grow">{children}</main>
+        <Footer lang={params.lang} />
+        <Toaster />
+      </LocationProvider>
     </SessionProvider>
   );
 }

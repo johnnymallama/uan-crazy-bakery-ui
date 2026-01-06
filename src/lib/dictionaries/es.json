@@ -207,7 +207,9 @@
           "phone": "Teléfono",
           "address": "Dirección",
           "department": "Departamento",
-          "city": "Ciudad"
+          "city": "Ciudad",
+          "select_department": "Selecciona un departamento",
+          "select_city": "Selecciona una ciudad"
         },
         "buttons": {
           "cancel": "Cancelar",
