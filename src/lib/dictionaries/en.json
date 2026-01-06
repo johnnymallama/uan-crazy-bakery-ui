@@ -6,65 +6,57 @@
     "login": "Login",
     "signUp": "Sign Up",
     "myAccount": "My Account",
-    "logout": "Logout"
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "consumer": "Consumer"
   },
   "home": {
     "hero": {
-      "title": "Welcome to Crazy Bakery",
-      "subtitle": "Where every bite is a piece of heaven. Freshly baked goods, crafted with love and the finest ingredients.",
+      "title": "Baked with Love, Delivered with Care",
+      "subtitle": "The freshest, most delicious baked goods, straight to your door.",
       "cta": "Order Now"
     },
     "creations": {
-      "title": "Our Creations",
-      "subtitle": "A glimpse into the magic we bake every day."
-    }
-  },
-  "order": {
-    "title": "Coming Soon!",
-    "description": "Our online ordering system is still in the oven. We're working hard to bring you a seamless ordering experience.",
-    "backToHome": "Back to Home"
-  },
-  "contact": {
-    "title": "Get in Touch",
-    "description": "We'd love to hear from you! Whether you have a question about our products, pricing, or anything else, our team is ready to answer all your questions.",
-    "email": {
-      "title": "Email",
-      "description": "Our inbox is always open. We'll get back to you as soon as possible."
+      "title": "Our Featured Creations",
+      "subtitle": "Discover a selection of our most popular cakes and pastries."
     },
-    "phone": {
-      "title": "Phone",
-      "description": "Give us a call during business hours for a quicker response."
-    },
-    "kitchen": {
-      "title": "Our Kitchen",
-      "directions": "Get Directions"
+    "testimonials": {
+      "title": "What Our Customers Say",
+      "description": "We love to hear from our customers. Here are some of the reviews we've received.",
+      "fallback": "Could not load testimonials at this time."
     }
   },
   "contactForm": {
-    "title": "Send us a Message",
-    "description": "Fill out the form below and we will get back to you.",
-    "name": {
-      "label": "Your Name",
-      "placeholder": "John Doe"
-    },
-    "email": {
-      "label": "Your Email",
-      "placeholder": "you@example.com"
-    },
-    "message": {
-      "label": "Your Message",
-      "placeholder": "Tell us how we can help..."
-    },
-    "submit": "Send Message",
-    "toast": {
-      "title": "Message Sent!",
-      "description": "Thanks for reaching out. We'll get back to you soon."
-    },
-    "validation": {
-      "nameMin": "Name must be at least 2 characters.",
-      "email": "Please enter a valid email address.",
-      "messageMin": "Message must be at least 10 characters.",
-      "messageMax": "Message cannot exceed 500 characters."
+    "title": "Have Questions?",
+    "description": "Get in touch with us. We'd love to hear from you.",
+    "location": "123 Dessert Lane, Suite 100, Pastryville, PC 54321",
+    "email": "hello@crazybakery.com",
+    "phone": "(123) 456-7890",
+    "form": {
+      "name": {
+        "label": "Your Name",
+        "placeholder": "John Doe"
+      },
+      "email": {
+        "label": "Your Email",
+        "placeholder": "you@example.com"
+      },
+      "message": {
+        "label": "Your Message",
+        "placeholder": "Tell us how we can help..."
+      },
+      "submit": "Send Message",
+      "toast": {
+        "title": "Message Sent!",
+        "description": "Thanks for reaching out. We'll get back to you soon."
+      },
+      "validation": {
+        "nameMin": "Name must be at least 2 characters.",
+        "email": "Please enter a valid email address.",
+        "messageMin": "Message must be at least 10 characters.",
+        "messageMax": "Message cannot exceed 500 characters."
+      }
     }
   },
   "loginForm": {
@@ -82,8 +74,8 @@
     "signUp": "Sign up",
     "toast": {
       "error": {
-        "title": "Invalid Credentials",
-        "description": "Please check your email and password and try again."
+        "title": "Login Error",
+        "description": "Invalid credentials. Please try again."
       }
     },
     "validation": {
@@ -93,27 +85,29 @@
   },
   "registerForm": {
     "title": "Create an Account",
-    "description": "Join Crazy Bakery to start ordering",
+    "description": "Sign up to start ordering your favorite sweets",
     "name": {
-      "label": "Name",
-      "placeholder": "Your Name"
+      "label": "Full Name",
+      "placeholder": "John Doe"
     },
     "email": {
       "label": "Email",
       "placeholder": "you@example.com"
     },
     "password": {
-      "label": "Password"
+      "label": "Password",
+      "placeholder": "********"
     },
     "confirmPassword": {
-      "label": "Confirm Password"
+      "label": "Confirm Password",
+      "placeholder": "********"
     },
     "submit": "Create Account",
     "hasAccount": "Already have an account?",
     "login": "Login",
     "toast": {
       "title": "Account Created!",
-      "description": "Welcome to Crazy Bakery! Please login to continue.",
+      "description": "Welcome! Redirecting to your dashboard...",
       "error": {
         "title": "Registration Error",
         "emailInUse": "This email is already registered. Please try another one.",
@@ -129,34 +123,34 @@
   },
   "privacy": {
     "title": "Privacy Policy",
-    "welcome": "Welcome to Crazy Bakery's Privacy Policy. This is a placeholder page. The content for the privacy policy will be added here.",
+    "welcome": "Welcome to the Crazy Bakery privacy policy. Your privacy is important to us.",
     "info": {
       "title": "Information We Collect",
-      "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla."
+      "p1": "We collect information you provide directly to us, such as your name, email, and address when you register or place an order."
     },
     "howWeUse": {
       "title": "How We Use Your Information",
-      "p1": "Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero."
+      "p1": "We use the information we collect to process your orders, communicate with you, and improve our services."
     },
     "sharing": {
-      "title": "Sharing Your Information",
-      "p1": "Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor."
+      "title": "How We Share Your Information",
+      "p1": "We do not share your personal information with third parties, except as necessary to complete your order (e.g., with our shipping partners)."
     }
   },
   "terms": {
     "title": "Terms of Service",
-    "welcome": "Welcome to Crazy Bakery's Terms of Service. This is a placeholder page. The content for the terms of service will be added here.",
+    "welcome": "Welcome to the Crazy Bakery terms of service. By using our website, you agree to these terms.",
     "acceptance": {
-      "title": "1. Acceptance of Terms",
-      "p1": "By accessing or using our services, you agree to be bound by these terms. If you disagree with any part of the terms, then you may not access the service."
+      "title": "Acceptance of Terms",
+      "p1": "By accessing and using our website, you agree to be bound by these Terms of Service and our Privacy Policy."
     },
     "orders": {
-      "title": "2. Orders and Payment",
-      "p1": "All orders are subject to acceptance and availability. Prices for our products are subject to change without notice. We reserve the right at any time to modify or discontinue the Service."
+      "title": "Orders and Payment",
+      "p1": "All orders are subject to availability and our acceptance. We reserve the right to refuse or cancel an order at any time."
     },
     "intellectualProperty": {
-      "title": "3. Intellectual Property",
-      "p1": "The Service and its original content, features, and functionality are and will remain the exclusive property of Crazy Bakery and its licensors."
+      "title": "Intellectual Property",
+      "p1": "All content on this website, including text, graphics, logos, and images, is our property and is protected by copyright laws."
     }
   },
   "unauthorized": {
@@ -170,20 +164,30 @@
     "cards": {
       "products": {
         "title": "Manage Products",
-        "description": "Add, edit, and remove products from the catalog."
+        "description": "Add, edit, or remove products from the catalog."
+      },
+      "orders": {
+        "title": "View Orders",
+        "description": "Review and manage customer orders."
       },
       "users": {
         "title": "Manage Users",
-        "description": "Add, edit, and remove users from the system."
+        "description": "View and manage user accounts."
+      },
+      "sizes": {
+        "title": "Manage Sizes",
+        "description": "Add, edit, or delete sizes for products."
       }
     }
   },
   "adminUsersPage": {
     "title": "Manage Users",
     "description": "This page will allow you to manage all the users in the system. You can add, edit, and delete users.",
+    "breadcrumb": "Back to Dashboard",
     "usersTable": {
       "title": "Users",
       "totalUsers": "Total Users: {total}",
+      "searchPlaceholder": "Filter by name or email...",
       "headers": {
         "name": "Name",
         "email": "Email",
@@ -196,13 +200,13 @@
         "page": "Page {currentPage} of {totalPages}"
       },
       "deleteUserDialog": {
-        "title": "Delete User: {userName}?",
+        "title": "Delete user: {userName}?",
         "description": "This action cannot be undone. This will permanently delete the user and their data from our servers.",
         "cancel": "Cancel",
         "delete": "Delete"
       },
       "editUser": {
-        "title": "Edit User",
+        "title": "Edit User: {userName}",
         "form": {
           "phone": "Phone",
           "address": "Address",
@@ -234,13 +238,85 @@
       }
     }
   },
+  "adminSizesPage": {
+    "title": "Manage Sizes",
+    "description": "This page will allow you to manage all the sizes for the products. You can add, edit, and delete sizes.",
+    "breadcrumb": "Back to Dashboard",
+    "recipeTypeTitle": "Recipe Type",
+    "recipeTypes": {
+      "cake": "Cake",
+      "cupcake": "Cupcake"
+    },
+    "sizesTable": {
+      "title": "Sizes List",
+      "addNewSize": "Add New",
+      "headers": {
+        "name": "Name",
+        "height": "Height (cm)",
+        "diameter": "Diameter (cm)",
+        "portions": "Portions",
+        "actions": "Actions"
+      },
+      "noSizes": "No sizes to display.",
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
+      }
+    },
+    "addSizeModal": {
+      "title": "Add New Size",
+      "description": "Complete the form to add a new size.",
+      "fields": {
+        "name": "Name",
+        "diameter": "Diameter (cm)",
+        "height": "Height (cm)",
+        "portions": "Portions"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "notifications": {
+        "success": "Size added successfully!",
+        "error": "Failed to add size. Please try again."
+      }
+    },
+    "editSizeModal": {
+      "title": "Edit Size",
+      "description": "Modify the size details below. Note that the name cannot be changed.",
+      "notifications": {
+        "success": "Size updated successfully!",
+        "error": "Failed to update size. Please try again."
+      }
+    },
+    "deleteSizeModal": {
+      "title": "Are you sure you want to delete the size \"{sizeName}\"?",
+      "description": "This action cannot be undone. This will permanently delete the size and unlink it from any associated products.",
+      "buttons": {
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "notifications": {
+        "success": "Size deleted successfully!",
+        "error": "Failed to delete size. Please try again."
+      }
+    }
+  },
   "consumerDashboard": {
     "title": "Consumer Dashboard",
-    "description": "Welcome to your dashboard. Here you can manage your orders and account.",
+    "description": "Welcome to your dashboard. Here you can manage your account information and view your order history.",
     "cards": {
+      "profile": {
+        "title": "My Profile",
+        "description": "Update your personal account details."
+      },
       "orders": {
         "title": "My Orders",
-        "description": "View your order history and track current orders."
+        "description": "Review your past and current orders."
+      },
+      "settings": {
+        "title": "Settings",
+        "description": "Manage your account settings and preferences."
       }
     }
   }

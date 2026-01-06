@@ -1,5 +1,6 @@
 
 import { User } from './types/user';
+import { CreateTamanoPayload, Tamano, UpdateTamanoPayload } from './types/tamano';
 
 const BASE_URL = 'https://crazy-bakery-bk-835393530868.us-central1.run.app';
 
@@ -98,4 +99,95 @@ export async function updateUser(userId: string, userData: Partial<User>) {
   }
 
   return response.json();
+}
+
+/**
+ * Creates a new tamano in the backend database.
+ * @param tamanoData - The tamano's data for creation.
+ * @returns The response from the server.
+ */
+export async function createTamano(tamanoData: CreateTamanoPayload): Promise<Tamano> {
+  const response = await fetch(`${BASE_URL}/tamanos`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(tamanoData),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'An error occurred during tamano creation.');
+  }
+
+  return response.json();
+}
+
+/**
+ * Fetches all tamanos from the backend.
+ * @returns A promise that resolves to an array of tamanos.
+ */
+export async function getTamanos(): Promise<Tamano[]> {
+  const response = await fetch(`${BASE_URL}/tamanos`, {
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    console.error('Failed to fetch tamanos');
+    throw new Error('Failed to fetch tamanos');
+  }
+
+  return response.json();
+}
+
+/**
+ * Fetches tamano data from the backend by its ID.
+ * @param id The tamano's ID.
+ * @returns The tamano's data from the backend.
+ */
+export async function getTamanoById(id: number): Promise<Tamano> {
+  const response = await fetch(`${BASE_URL}/tamanos/${id}`);
+
+  if (!response.ok) {
+    throw new Error('Tamano not found in database.');
+  }
+
+  return response.json();
+}
+
+/**
+ * Updates a tamano in the backend database.
+ * @param id - The ID of the tamano to update.
+ * @param tamanoData - The tamano's data to update.
+ * @returns The response from the server.
+ */
+export async function updateTamano(id: number, tamanoData: UpdateTamanoPayload): Promise<Tamano> {
+  const response = await fetch(`${BASE_URL}/tamanos/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(tamanoData),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update tamano');
+  }
+
+  return response.json();
+}
+
+/**
+ * Deletes a tamano from the backend database.
+ * @param id - The ID of the tamano to delete.
+ * @returns The response from the server.
+ */
+export async function deleteTamano(id: number): Promise<void> {
+  const response = await fetch(`${BASE_URL}/tamanos/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to delete tamano');
+  }
 }

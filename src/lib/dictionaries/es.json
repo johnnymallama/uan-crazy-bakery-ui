@@ -173,6 +173,10 @@
       "users": {
         "title": "Gestionar Usuarios",
         "description": "Ver y gestionar las cuentas de usuario."
+      },
+      "sizes": {
+        "title": "Gestionar Tamaños",
+        "description": "Añadir, editar o eliminar tamaños para los productos."
       }
     }
   },
@@ -231,6 +235,70 @@
           "title": "¡Usuario Eliminado!",
           "description": "El usuario ha sido eliminado exitosamente."
         }
+      }
+    }
+  },
+  "adminSizesPage": {
+    "title": "Gestionar Tamaños",
+    "description": "Esta página te permitirá gestionar todos los tamaños para los productos. Podrás añadir, editar y eliminar tamaños.",
+    "breadcrumb": "Volver al Dashboard",
+    "recipeTypeTitle": "Tipo de Receta",
+    "recipeTypes": {
+      "cake": "Torta",
+      "cupcake": "Cupcake"
+    },
+    "sizesTable": {
+      "title": "Lista de Tamaños",
+      "addNewSize": "Agregar",
+      "headers": {
+        "name": "Nombre",
+        "height": "Alto (cm)",
+        "diameter": "Diámetro (cm)",
+        "portions": "Porciones",
+        "actions": "Acciones"
+      },
+      "noSizes": "No hay tamaños para mostrar.",
+      "actions": {
+        "edit": "Editar",
+        "delete": "Eliminar"
+      }
+    },
+    "addSizeModal": {
+      "title": "Añadir Nuevo Tamaño",
+      "description": "Completa el formulario para añadir un nuevo tamaño.",
+      "fields": {
+        "name": "Nombre",
+        "diameter": "Diámetro (cm)",
+        "height": "Alto (cm)",
+        "portions": "Porciones"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "save": "Guardar"
+      },
+      "notifications": {
+        "success": "¡Tamaño añadido con éxito!",
+        "error": "Error al añadir el tamaño. Por favor, inténtalo de nuevo."
+      }
+    },
+    "editSizeModal": {
+      "title": "Editar Tamaño",
+      "description": "Modifica los detalles del tamaño a continuación. Ten en cuenta que el nombre no se puede cambiar.",
+      "notifications": {
+        "success": "¡Tamaño actualizado con éxito!",
+        "error": "Error al actualizar el tamaño. Por favor, inténtalo de nuevo."
+      }
+    },
+    "deleteSizeModal": {
+      "title": "¿Estás seguro de que quieres eliminar el tamaño \"{sizeName}\"?",
+      "description": "Esta acción no se puede deshacer. Esto eliminará permanentemente el tamaño y lo desvinculará de cualquier producto asociado.",
+      "buttons": {
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
+      },
+      "notifications": {
+        "success": "¡Tamaño eliminado con éxito!",
+        "error": "Error al eliminar el tamaño. Por favor, inténtalo de nuevo."
       }
     }
   },

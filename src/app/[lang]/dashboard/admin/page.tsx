@@ -28,6 +28,12 @@ export default async function AdminDashboardPage({
           title={dictionary.adminDashboard.cards.users.title}
           description={dictionary.adminDashboard.cards.users.description}
         />
+        <DashboardCard
+          lang={lang}
+          href="/admin/sizes"
+          title={dictionary.adminDashboard.cards.sizes.title}
+          description={dictionary.adminDashboard.cards.sizes.description}
+        />
       </div>
     </div>
   );
