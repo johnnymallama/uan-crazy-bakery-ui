@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { getUserById } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 
 import { Button } from "@/components/ui/button";
@@ -59,16 +58,31 @@ export function LoginForm({ dictionary: t, lang }: { dictionary: Dictionary, lan
     setIsLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
+      const { uid } = userCredential.user;
 
       try {
-        const user = await getUserById(userCredential.user.uid);
-        if (user.tipo.toLowerCase() === 'administrador') {
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ uid }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create session');
+        }
+
+        const { role } = await response.json();
+
+        if (role === 'administrador') {
           router.push(`/${lang}/dashboard/admin`);
-        } else if (user.tipo.toLowerCase() === 'consumidor') {
+        } else if (role === 'consumidor') {
           router.push(`/${lang}/dashboard/consumer`);
         } else {
           router.push(`/${lang}/unauthorized`);
         }
+
       } catch (backendError) {
         await signOut(auth);
         toast({

@@ -49,8 +49,22 @@ export function Header({ lang, dictionary }: { lang: Locale, dictionary: Navigat
   const t = dictionary;
 
   const handleLogout = async () => {
-    await firebaseSignOut(auth);
-    router.push(`/${lang}`);
+    // Call the logout API route to clear the session cookie
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+      });
+    } catch (error) {
+      console.error("Failed to logout from API", error);
+      // Even if API call fails, proceed with Firebase sign out and redirection
+    } finally {
+      // Sign out from Firebase
+      await firebaseSignOut(auth);
+      // Redirect to home page
+      router.push(`/${lang}`);
+      // Force a reload to ensure all state is cleared
+      router.refresh();
+    }
   };
 
   const navItems = [

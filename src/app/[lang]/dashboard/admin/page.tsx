@@ -18,19 +18,19 @@ export default async function AdminDashboardPage({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <DashboardCard
           lang={lang}
-          href="/admin/products"
+          href="/dashboard/admin/products"
           title={dictionary.adminDashboard.cards.products.title}
           description={dictionary.adminDashboard.cards.products.description}
         />
         <DashboardCard
           lang={lang}
-          href="/admin/users"
+          href="/dashboard/admin/users"
           title={dictionary.adminDashboard.cards.users.title}
           description={dictionary.adminDashboard.cards.users.description}
         />
         <DashboardCard
           lang={lang}
-          href="/admin/sizes"
+          href="/dashboard/admin/sizes"
           title={dictionary.adminDashboard.cards.sizes.title}
           description={dictionary.adminDashboard.cards.sizes.description}
         />
