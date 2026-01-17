@@ -25,8 +25,16 @@ function getLocale(request: NextRequest): string | undefined {
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  
+  //TODO Habilitar para ejecutar en workspace firebase, recordar comentariar ambiente productivo
+  /*
+  const valorLocal = '%7B%22uid%22%3A%22vQ81bGA34pOxnijOZcT9XBThBOq1%22%2C%22role%22%3A%22administrador%22%7D';
+  const sessionCookie = decodeURIComponent(valorLocal);
+  */
+  
+  //TODO Habilitar para ejecutar en ambiente productivo
   const sessionCookie = request.cookies.get('session')?.value;
-
+  
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );

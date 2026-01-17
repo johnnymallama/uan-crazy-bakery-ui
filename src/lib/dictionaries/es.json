@@ -259,8 +259,12 @@
       },
       "noSizes": "No hay tamaños para mostrar.",
       "actions": {
-        "edit": "Editar",
-        "delete": "Eliminar"
+        "tooltips": {
+          "addGrammage": "Añadir Gramaje",
+          "edit": "Editar Tamaño",
+          "delete": "Eliminar Tamaño",
+          "viewGrammage": "Ver Gramajes"
+        }
       }
     },
     "addSizeModal": {
@@ -300,6 +304,38 @@
         "success": "¡Tamaño eliminado con éxito!",
         "error": "Error al eliminar el tamaño. Por favor, inténtalo de nuevo."
       }
+    }
+  },
+  "addGrammageDialog": {
+    "title": "Añadir Gramaje al Tamaño",
+    "infoPrefix": "Añadiendo gramaje para:",
+    "ingredientType": "Tipo de Ingrediente",
+    "selectIngredientType": "Selecciona un tipo",
+    "grams": "Gramos (gr)",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "notifications": {
+      "success": "¡Gramaje añadido con éxito!",
+      "error": "Error al añadir el gramaje. Por favor, inténtalo de nuevo."
+    }
+  },
+  "viewGrammageDialog": {
+    "title": "Lista de Gramaje por Tamaño",
+    "headers": {
+      "ingredientType": "Tipo Ingrediente",
+      "grams": "Gramaje (gr)",
+      "actions": "Acción"
+    },
+    "close": "Cerrar",
+    "deleteGrammageDialog": {
+      "title": "¿Estás seguro de que quieres eliminar este gramaje?",
+      "description": "Esta acción no se puede deshacer. Esto eliminará permanentemente el gramaje.",
+      "cancel": "Cancelar",
+      "delete": "Eliminar"
+    },
+    "notifications": {
+      "success": "¡Gramaje eliminado con éxito!",
+      "error": "Error al eliminar el gramaje. Por favor, inténtalo de nuevo."
     }
   },
   "consumerDashboard": {

@@ -1,6 +1,8 @@
 
 import { User } from './types/user';
 import { CreateTamanoPayload, Tamano, UpdateTamanoPayload } from './types/tamano';
+import { IngredienteTamano } from './types/ingrediente-tamano';
+import { IngredienteTamanoDetalle } from './types/ingrediente-tamano-detalle';
 
 const BASE_URL = 'https://crazy-bakery-bk-835393530868.us-central1.run.app';
 
@@ -189,5 +191,60 @@ export async function deleteTamano(id: number): Promise<void> {
 
   if (!response.ok) {
     throw new Error('Failed to delete tamano');
+  }
+}
+
+/**
+ * Adds a new ingredient grammage to a size.
+ * @param data - The ingredient-size data.
+ * @returns The response from the server.
+ */
+export const addIngredienteTamano = async (data: IngredienteTamano): Promise<any> => {
+  const response = await fetch(`${BASE_URL}/ingrediente-tamano`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Error al añadir el gramaje');
+  }
+
+  return response.json();
+};
+
+/**
+ * Fetches all ingredient grammages for a given size.
+ * @param tamanoId - The ID of the size.
+ * @returns A promise that resolves to an array of ingredient grammages.
+ */
+export async function getIngredientesPorTamano(tamanoId: number): Promise<IngredienteTamanoDetalle[]> {
+  const response = await fetch(`${BASE_URL}/ingrediente-tamano/${tamanoId}`, {
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    console.error(`Failed to fetch grammages for size ${tamanoId}`);
+    throw new Error(`Failed to fetch grammages for size ${tamanoId}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Deletes an ingredient grammage from the backend database.
+ * @param id - The ID of the ingredient grammage to delete.
+ * @returns The response from the server.
+ */
+export async function deleteIngredienteTamano(id: number): Promise<void> {
+  const response = await fetch(`${BASE_URL}/ingrediente-tamano/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to delete ingredient grammage');
   }
 }

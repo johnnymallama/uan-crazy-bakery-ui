@@ -150,7 +150,7 @@
     },
     "intellectualProperty": {
       "title": "Intellectual Property",
-      "p1": "All content on this website, including text, graphics, logos, and images, is our property and is protected by copyright laws."
+      "p1": "All content on this-website, including text, graphics, logos, and images, is our property and is protected by copyright laws."
     }
   },
   "unauthorized": {
@@ -259,8 +259,12 @@
       },
       "noSizes": "No sizes to display.",
       "actions": {
-        "edit": "Edit",
-        "delete": "Delete"
+        "tooltips": {
+          "addGrammage": "Add Grammage",
+          "edit": "Edit Size",
+          "delete": "Delete Size",
+          "viewGrammage": "View Grammages"
+        }
       }
     },
     "addSizeModal": {
@@ -300,6 +304,38 @@
         "success": "Size deleted successfully!",
         "error": "Failed to delete size. Please try again."
       }
+    }
+  },
+  "addGrammageDialog": {
+    "title": "Add Grammage to Size",
+    "infoPrefix": "Adding grammage for:",
+    "ingredientType": "Ingredient Type",
+    "selectIngredientType": "Select a type",
+    "grams": "Grams (gr)",
+    "cancel": "Cancel",
+    "save": "Save",
+    "notifications": {
+      "success": "Grammage added successfully!",
+      "error": "Failed to add grammage. Please try again."
+    }
+  },
+  "viewGrammageDialog": {
+    "title": "Grammage List by Size",
+    "headers": {
+      "ingredientType": "Ingredient Type",
+      "grams": "Grammage (gr)",
+      "actions": "Action"
+    },
+    "close": "Close",
+    "deleteGrammageDialog": {
+      "title": "Are you sure you want to delete this grammage?",
+      "description": "This action cannot be undone. This will permanently delete the grammage.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "notifications": {
+      "success": "Grammage deleted successfully!",
+      "error": "Failed to delete grammage. Please try again."
     }
   },
   "consumerDashboard": {
