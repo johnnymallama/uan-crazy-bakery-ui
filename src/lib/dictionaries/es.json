@@ -1,4 +1,3 @@
-
 {
   "navigation": {
     "home": "Inicio",
@@ -200,7 +199,8 @@
       "actions": "Acciones",
       "pagination": {
         "previous": "Anterior",
-        "next": "Siguiente"
+        "next": "Siguiente",
+        "page": "Página {currentPage} de {totalPages}"
       },
       "noOrders": "No hay pedidos para mostrar.",
       "noClient": "Sin Cliente"
@@ -210,7 +210,7 @@
       "all": "Todos los Estados",
       "CREADO": "Creado",
       "CONFIRMADO": "Confirmado",
-      "EN_PREPARACION": "En Preparación",
+      "EN_PROCESO": "En Proceso",
       "LISTO": "Listo para Entrega",
       "ENTREGADO": "Entregado",
       "CANCELADO": "Cancelado"
@@ -577,7 +577,11 @@
   "editOrderModal": {
     "title": "Editar Pedido",
     "cancel": "Cancelar",
-    "save": "Guardar Cambios"
+    "save": "Guardar Cambios",
+    "notesCard": {
+      "title": "Notas",
+      "placeholder": "Añade una nota para el pedido..."
+    }
   },
   "orderModal": {
     "title": "Detalles del Pedido",

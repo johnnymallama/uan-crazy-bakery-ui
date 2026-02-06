@@ -11,7 +11,7 @@ interface StatusFilterProps {
 }
 
 export function StatusFilter({ dictionary, selectedStatus, onChange }: StatusFilterProps) {
-  const orderStatuses: (Estado | 'ALL')[] = ['ALL', 'CREADO', 'CONFIRMADO', 'EN_PREPARACION', 'LISTO', 'ENTREGADO', 'CANCELADO'];
+  const orderStatuses: (Estado | 'ALL')[] = ['ALL', 'CREADO', 'CONFIRMADO', 'EN_PROCESO', 'LISTO', 'ENTREGADO', 'CANCELADO'];
   const pageDict = dictionary.adminOrderManagementPage || {};
   const statusDict = pageDict.orderStatus || {};
 

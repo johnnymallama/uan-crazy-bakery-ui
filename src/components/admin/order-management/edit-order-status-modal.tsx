@@ -16,8 +16,10 @@ type EditOrderStatusModalProps = {
   onClose: () => void;
   order: Order | null;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
-  onStatusChange: (orderId: number, newStatus: Estado) => void;
+  onStatusChange: (orderId: number, newStatus: Estado, notes?: string) => void;
 };
+
+const statusSequence: Estado[] = ['CREADO', 'CONFIRMADO', 'EN_PROCESO', 'LISTO', 'ENTREGADO'];
 
 export function EditOrderStatusModal({ isOpen, onClose, order, dictionary, onStatusChange }: EditOrderStatusModalProps) {
   const [currentStatus, setCurrentStatus] = useState<Estado | undefined>(undefined);
@@ -25,9 +27,13 @@ export function EditOrderStatusModal({ isOpen, onClose, order, dictionary, onSta
 
   useEffect(() => {
     if (order) {
-      setCurrentStatus(order.estado);
-      // Assuming notes could come from the order object in the future, e.g., order.notes
-      // setNotes(order.notes || '');
+      const currentIndex = statusSequence.findIndex(s => s === order.estado);
+      const nextStatus =
+        currentIndex !== -1 && currentIndex < statusSequence.length - 1
+          ? statusSequence[currentIndex + 1]
+          : order.estado;
+      setCurrentStatus(nextStatus);
+      setNotes('');
     }
   }, [order]);
 
@@ -40,8 +46,7 @@ export function EditOrderStatusModal({ isOpen, onClose, order, dictionary, onSta
 
   const handleSave = () => {
     if (currentStatus && order) {
-      // Here you would also handle saving the notes
-      onStatusChange(order.id, currentStatus);
+      onStatusChange(order.id, currentStatus, notes);
       onClose();
     }
   };

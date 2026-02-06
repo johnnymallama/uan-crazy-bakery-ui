@@ -2,7 +2,7 @@ import { User } from './user';
 import { Receta } from './receta';
 
 // As per the class diagram
-export type Estado = 'CREADO' | 'CONFIRMADO' | 'EN_PREPARACION' | 'LISTO' | 'ENTREGADO' | 'CANCELADO';
+export type Estado = 'CREADO' | 'CONFIRMADO' | 'EN_PROCESO' | 'LISTO' | 'ENTREGADO' | 'CANCELADO';
 
 // Assuming Nota is a simple object with a string message
 export interface Nota {

@@ -411,19 +411,34 @@ export async function getOrders(status?: Estado | 'ALL'): Promise<Order[]> {
  * Updates the status of an order in the backend.
  * @param orderId - The ID of the order to update.
  * @param newStatus - The new status for the order.
+ * @param notes - Optional notes for the status update.
  * @returns The response from the server.
  */
-export async function updateOrderStatus(orderId: number, newStatus: Estado): Promise<Order> {
+export async function updateOrderStatus(orderId: number, newStatus: Estado, notes?: string): Promise<Order> {
+  const body: { estado: Estado; nota?: string } = { estado: newStatus };
+  if (notes) {
+    body.nota = notes;
+  }
+
   const response = await fetch(`${BASE_URL}/orden/${orderId}/estado`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ estado: newStatus }),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
-    throw new Error(`Error updating order status: ${response.statusText}`);
+    let errorDetails = response.statusText;
+    try {
+      const errorData = await response.json();
+      if (errorData && errorData.message) {
+        errorDetails = errorData.message;
+      }
+    } catch (e) {
+      // Ignore if the error response is not JSON
+    }
+    throw new Error(`Error updating order status: ${errorDetails} (Status: ${response.status})`);
   }
 
   return response.json();

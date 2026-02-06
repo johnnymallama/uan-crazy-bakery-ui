@@ -1,4 +1,3 @@
-
 {
   "navigation": {
     "home": "Home",
@@ -200,7 +199,8 @@
       "actions": "Actions",
       "pagination": {
         "previous": "Previous",
-        "next": "Next"
+        "next": "Next",
+        "page": "Page {currentPage} of {totalPages}"
       },
       "noOrders": "There are no orders to display.",
       "noClient": "No Client"
@@ -210,7 +210,7 @@
       "all": "All Statuses",
       "CREADO": "Created",
       "CONFIRMADO": "Confirmed",
-      "EN_PREPARACION": "In Preparation",
+      "EN_PROCESO": "In Process",
       "LISTO": "Ready",
       "ENTREGADO": "Delivered",
       "CANCELADO": "Canceled"

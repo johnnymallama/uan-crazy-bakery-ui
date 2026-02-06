@@ -22,6 +22,7 @@ interface OrdersTableProps {
   orders: Order[];
   dictionary: Awaited<ReturnType<typeof getDictionary>>[];
   onStatusChange: (orderId: number, newStatus: Estado) => void;
+  itemsPerPage?: number;
 }
 
 const estadoColors: Record<Estado, string> = {
@@ -33,15 +34,27 @@ const estadoColors: Record<Estado, string> = {
   CANCELADO: 'bg-red-500',
 };
 
-export function OrdersTable({ orders, dictionary, onStatusChange }: OrdersTableProps) {
+export function OrdersTable({ orders, dictionary, onStatusChange, itemsPerPage = 10 }: OrdersTableProps) {
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const pageDict = dictionary.adminOrderManagementPage || {};
   const tableDict = pageDict.ordersTable || {};
   const statusDict = pageDict.orderStatus || {};
   const actionsDict = pageDict.actions || {};
+
+  const totalPages = Math.ceil(orders.length / itemsPerPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const paginatedOrders = orders.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleViewDetails = (order: Order) => {
     setSelectedOrder(order);
@@ -73,7 +86,7 @@ export function OrdersTable({ orders, dictionary, onStatusChange }: OrdersTableP
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders.map((order) => {
+          {paginatedOrders.map((order) => {
             const isEditable = order.estado !== 'CANCELADO' && order.estado !== 'ENTREGADO';
             return (
               <TableRow key={order.id}>
@@ -101,6 +114,31 @@ export function OrdersTable({ orders, dictionary, onStatusChange }: OrdersTableP
           })}
         </TableBody>
       </Table>
+      {totalPages > 1 && (
+        <div className="flex justify-end items-center mt-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            {tableDict.pagination.previous}
+          </Button>
+          <span className="mx-2 text-sm">
+            {tableDict.pagination.page
+              .replace("{currentPage}", currentPage.toString())
+              .replace("{totalPages}", totalPages.toString())}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            {tableDict.pagination.next}
+          </Button>
+        </div>
+      )}
       <OrderDetailsModal 
         isOpen={isDetailsModalOpen}
         onClose={handleCloseModals}

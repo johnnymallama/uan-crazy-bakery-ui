@@ -58,9 +58,9 @@ export function OrderManagementPage({ dictionary, lang }: OrderManagementPagePro
     setSelectedStatus(newStatus);
   };
 
-  const handleUpdateStatus = async (orderId: number, newStatus: Estado) => {
+  const handleUpdateStatus = async (orderId: number, newStatus: Estado, notes?: string) => {
     try {
-      const updatedOrder = await updateOrderStatus(orderId, newStatus);
+      const updatedOrder = await updateOrderStatus(orderId, newStatus, notes);
       const updatedOrders = orders.map(order =>
         order.id === orderId ? updatedOrder : order
       );
