@@ -1,26 +1,32 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { useState, useEffect, useRef } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { getDictionary } from '@/lib/get-dictionary';
-import { addNoteToOrder } from '@/lib/apis/orden-api';
+import { addNoteToOrder, Order, Nota } from '@/lib/apis/orden-api';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useSession } from '@/context/session-provider';
 
-type AddNoteModalProps = {
+type NotesModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  orderId: number | null;
+  order: Order | null;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
-  onNoteAdded: () => void; // Callback to refresh data
+  onNoteAdded: () => void;
 };
 
-export function AddNoteModal({ isOpen, onClose, orderId, dictionary, onNoteAdded }: AddNoteModalProps) {
+export function NotesModal({ isOpen, onClose, order, dictionary, onNoteAdded }: NotesModalProps) {
   const [note, setNote] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const { addNoteModal, toasts } = dictionary.consumerOrders;
+  const { user } = useSession();
+  const { notesModal, toasts } = dictionary.consumerOrders;
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  const sortedNotes = order?.notas?.sort((a, b) => new Date(a.fechaCreacion).getTime() - new Date(b.fechaCreacion).getTime()) || [];
 
   useEffect(() => {
     if (isOpen) {
@@ -28,20 +34,30 @@ export function AddNoteModal({ isOpen, onClose, orderId, dictionary, onNoteAdded
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+        const scrollViewport = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
+        if (scrollViewport) {
+            scrollViewport.scrollTop = scrollViewport.scrollHeight;
+        }
+    }
+  }, [sortedNotes, isOpen]);
+
+
   const handleSubmit = async () => {
-    if (!orderId || !note.trim()) {
+    if (!order || !note.trim()) {
       return;
     }
 
     setIsLoading(true);
     try {
-      await addNoteToOrder(orderId, { nota: note });
+      await addNoteToOrder(order.id, { nota: note });
       toast({
         title: toasts.addNoteSuccess.title,
         description: toasts.addNoteSuccess.description,
       });
-      onNoteAdded();
-      onClose();
+      onNoteAdded(); 
+      setNote('');
     } catch (error) {
       console.error("Error adding note:", error);
       toast({
@@ -54,29 +70,62 @@ export function AddNoteModal({ isOpen, onClose, orderId, dictionary, onNoteAdded
     }
   };
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString(dictionary.lang === 'es' ? 'es-ES' : 'en-US', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>{addNoteModal.title}</DialogTitle>
-          <DialogDescription>
-            {addNoteModal.description}
-          </DialogDescription>
+          <DialogTitle>{notesModal.title}</DialogTitle>
+          <DialogDescription>{notesModal.description}</DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <Textarea
-            placeholder={addNoteModal.placeholder}
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            disabled={isLoading}
-          />
+        
+        <div className="py-4">
+          <ScrollArea className="h-72 w-full rounded-md border p-4" ref={scrollAreaRef}>
+            {sortedNotes.length > 0 ? (
+              <div className="space-y-4">
+                {sortedNotes.map((n: Nota) => (
+                  <div key={n.id} className={`flex flex-col ${user?.name === n.usuarioNombre ? 'items-end' : 'items-start'}`}>
+                    <div className={`rounded-lg px-3 py-2 max-w-sm ${user?.name === n.usuarioNombre ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
+                      <p className="text-xs font-bold mb-1">{n.usuarioNombre}</p>
+                      <p className="text-sm">{n.nota}</p>
+                      <p className="text-xs text-right mt-1 opacity-70">{formatDate(n.fechaCreacion)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex h-full items-center justify-center">
+                <p className="text-muted-foreground">{notesModal.noNotes}</p>
+              </div>
+            )}
+          </ScrollArea>
         </div>
-        <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={onClose} disabled={isLoading}>{addNoteModal.cancel}</Button>
+
+        <div className="grid gap-4">
+            <Textarea
+              placeholder={notesModal.placeholder}
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              disabled={isLoading}
+            />
+        </div>
+        
+        <DialogFooter>
+            <Button variant="outline" onClick={onClose} disabled={isLoading}>{notesModal.cancel}</Button>
             <Button onClick={handleSubmit} disabled={isLoading}>
-              {isLoading ? addNoteModal.submitting : addNoteModal.submit}
+              {isLoading ? notesModal.submitting : notesModal.submit}
             </Button>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

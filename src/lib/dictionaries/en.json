@@ -538,14 +538,6 @@
       },
       "closeButton": "Close"
     },
-    "addNoteModal": {
-      "title": "Add Note to Order",
-      "description": "The note will be visible to the bakery staff. Use it to clarify details or ask questions.",
-      "placeholder": "Write your note here...",
-      "cancel": "Cancel",
-      "submit": "Submit Note",
-      "submitting": "Submitting..."
-    },
     "cancelOrderDialog": {
       "title": "Are you sure you want to cancel this order?",
       "description": "This action cannot be undone. This will permanently cancel your order.",
@@ -570,6 +562,16 @@
         "title": "Error Cancelling Order",
         "description": "There was a problem cancelling your order. Please try again."
       }
+    },
+    "notesModal": {
+      "title": "Order Notes",
+      "description": "Check the notes history or add a new one to communicate with the bakery.",
+      "placeholder": "Write your new note here...",
+      "cancel": "Close",
+      "submit": "Submit Note",
+      "submitting": "Submitting...",
+      "noNotes": "There are no notes for this order yet.",
+      "tooltip": "View or Add Notes"
     }
   },
   "editOrderModal": {

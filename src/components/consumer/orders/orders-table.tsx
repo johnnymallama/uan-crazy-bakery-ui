@@ -8,7 +8,7 @@ import { columns } from './columns';
 import { getOrdersByUserId, Order } from '@/lib/apis/orden-api'; 
 import { getDictionary } from '@/lib/get-dictionary';
 import { OrderDetailsModal } from './order-details-modal';
-import { AddNoteModal } from './add-note-modal';
+import { NotesModal } from './add-note-modal';
 import { useRouter } from 'next/navigation';
 
 
@@ -77,10 +77,10 @@ export function OrdersTable({ dictionary }: { dictionary: Awaited<ReturnType<typ
         dictionary={dictionary}
       />
 
-      <AddNoteModal
+      <NotesModal
         isOpen={isNoteModalOpen}
         onClose={() => setNoteModalOpen(false)}
-        orderId={selectedOrder?.id ?? null}
+        order={selectedOrder}
         dictionary={dictionary}
         onNoteAdded={() => {
           setNoteModalOpen(false); // Close modal on success

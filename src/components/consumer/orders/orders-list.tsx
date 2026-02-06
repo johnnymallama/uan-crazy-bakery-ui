@@ -11,7 +11,7 @@ import { getDictionary } from '@/lib/get-dictionary';
 import { getOrdersByUserId, Order } from '@/lib/apis/orden-api';
 import { MessageSquarePlus, XCircle } from 'lucide-react';
 import { OrderDetailsModal } from './order-details-modal';
-import { AddNoteModal } from './add-note-modal';
+import { NotesModal } from './add-note-modal';
 import { CancelOrderDialog } from './cancel-order-dialog';
 
 const statusColors: { [key: string]: 'default' | 'secondary' | 'destructive' | 'outline' } = {
@@ -140,7 +140,7 @@ export function OrdersList({ dictionary }: OrdersListProps) {
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>{dictionary.consumerOrders.table.actions.addNote}</p>
+                        <p>{dictionary.consumerOrders.notesModal.tooltip}</p>
                       </TooltipContent>
                     </Tooltip>
                     <Tooltip>
@@ -219,10 +219,10 @@ export function OrdersList({ dictionary }: OrdersListProps) {
         dictionary={dictionary}
       />
 
-      <AddNoteModal
+      <NotesModal
         isOpen={isNoteModalOpen}
         onClose={() => setNoteModalOpen(false)}
-        orderId={selectedOrder?.id ?? null}
+        order={selectedOrder}
         onNoteAdded={handleNoteAdded}
         dictionary={dictionary}
       />

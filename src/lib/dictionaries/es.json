@@ -538,14 +538,6 @@
       },
       "closeButton": "Cerrar"
     },
-    "addNoteModal": {
-      "title": "Agregar Nota al Pedido",
-      "description": "La nota será visible para el personal de la pastelería. Úsalo para aclarar detalles o hacer preguntas.",
-      "placeholder": "Escribe tu nota aquí...",
-      "cancel": "Cancelar",
-      "submit": "Enviar Nota",
-      "submitting": "Enviando..."
-    },
     "cancelOrderDialog": {
       "title": "¿Estás seguro de que quieres cancelar este pedido?",
       "description": "Esta acción no se puede deshacer. Esto cancelará permanentemente tu pedido.",
@@ -570,6 +562,16 @@
         "title": "Error al Cancelar el Pedido",
         "description": "Hubo un problema al cancelar tu pedido. Por favor, inténtalo de nuevo."
       }
+    },
+    "notesModal": {
+      "title": "Notas del Pedido",
+      "description": "Consulta el historial de notas o añade una nueva para comunicarte con la pastelería.",
+      "placeholder": "Escribe tu nueva nota aquí...",
+      "cancel": "Cerrar",
+      "submit": "Enviar Nota",
+      "submitting": "Enviando...",
+      "noNotes": "Aún no hay notas para este pedido.",
+      "tooltip": "Ver o Añadir Notas"
     }
   },
   "editOrderModal": {
@@ -713,7 +715,10 @@
       "unknown": "Ocurrió un error desconocido."
     },
     "successScreen": {
-      "title": "¡Producto Añadido!","orderNumberLabel": "Tu número de orden es:","addProductButton": "Añadir otro producto","finishOrderButton": "Finalizar y ver mi pedido"
+      "title": "¡Producto Añadido!",
+      "orderNumberLabel": "Tu número de orden es:",
+      "addProductButton": "Añadir otro producto",
+      "finishOrderButton": "Finalizar y ver mi pedido"
     }
   }
 }

@@ -92,6 +92,16 @@ export async function agregarRecetaAOrden(
 // --- Consultar Órdenes por Usuario ---
 
 /**
+ * Interfaz para las notas de una orden.
+ */
+export interface Nota {
+  id: number;
+  fechaCreacion: string;
+  nota: string;
+  usuarioNombre: string;
+}
+
+/**
 * Interfaz para cada orden retornada por la API.
 */
 export type Order = {
@@ -110,7 +120,7 @@ export type Order = {
     estado: boolean;
   };
   recetas: any[]; 
-  notas: any[];
+  notas: Nota[];
   estado: 'CREADO' | 'CONFIRMADO' | 'EN_PROCESO' | 'LISTO' | 'ENTREGADO' | 'CANCELADO';
   valorTotal: number;
   ganancia: number;
