@@ -609,6 +609,15 @@
       "shipping": "Información de Envío",
       "summary": "Confirma tu Pedido"
     },
+    "recipeTypeDescriptions": {
+      "cake": "Una base clásica, perfecta para celebraciones y eventos especiales.",
+      "cupcake": "Porciones individuales de alegría, ideales para compartir o darte un gusto."
+    },
+    "sizeDetails": {
+      "portions": "Porciones",
+      "height": "Altura",
+      "diameter": "Diámetro"
+    },
     "authChoiceStep": {
       "title": "Casi listo para continuar",
       "description": "Para guardar tu información de envío y continuar, por favor, inicia sesión en tu cuenta o crea una nueva.",

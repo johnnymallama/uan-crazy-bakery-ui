@@ -25,7 +25,7 @@ function buildPrompt(orderData: any, customizationText: string): string {
   prompt += `\nAhora, aplica tus conocimientos de pastelería siguiendo estas reglas estrictas:\n`;
   prompt += `1.  **Toppings:** Eres libre de usar y sugerir creativamente cualquier topping que encaje con la descripción del cliente (chispas, frutas, perlas de azúcar, etc.).\n`;
   prompt += `2.  **Imágenes:** Puedes proponer decoraciones que incluyan imágenes impresas en papel de arroz. Son una excelente opción para temas específicos.\n`;
-  prompt += `3.  **Figuras 3D:** NO puedes crear figuras complejas en 3D (ej: personajes modelados en fondant). Menciona esta limitación si el cliente la pide, pero ofrece una alternativa creativa (como una impresión en papel de arroz).\n`;
+  prompt += `3.  **Figuras 3D:** NO puedes crear figuras en 3D.\n`;
   prompt += `4.  **Formato:** Tu respuesta debe ser una única descripción mejorada y detallada de la decoración final. No ofrezcas varias opciones. Debe ser un párrafo coherente y atractivo que el cliente pueda leer y confirmar.\n`;
   prompt += `5.  **Tono:** Sé amable, creativo y describe el pastel de una manera que suene deliciosa y visualmente atractiva.\n`;
   prompt += `6.  **Regla Crítica de Derechos de Autor:** Si el cliente solicita un personaje famoso con derechos de autor (por ejemplo, 'Mickey Mouse', 'Elsa', 'Spider-Man', personajes de anime, etc.), DEBES OBLIGATORIAMENTE reemplazar el nombre explícito por una descripción genérica que evoque al personaje sin nombrarlo. Por ejemplo, en lugar de "decorado con Mickey Mouse", debes proponer "decorado con la figura de un alegre ratoncito de orejas grandes y redondas y pantalones cortos rojos". Este paso es fundamental para evitar infracciones de derechos de autor en la generación de la propuesta visual.\n`;
@@ -38,7 +38,6 @@ function buildPrompt(orderData: any, customizationText: string): string {
 }
 
 export async function POST(req: Request) {
-  console.log('--- Iniciando la generación de sugerencia de IA (método manual y robusto) ---');
   if (!process.env.OPENAI_API_KEY) {
     console.error('¡Error Crítico! La variable de entorno OPENAI_API_KEY no está configurada.');
     return new Response('Error de configuración del servidor: la clave de API no está disponible.', { status: 500 });
@@ -55,7 +54,7 @@ export async function POST(req: Request) {
 
     // 1. Call the OpenAI API directly, requesting a stream
     const openaiResponse = await openai.chat.completions.create({
-      model: process.env.OPENAI_API_MODEL || 'gpt-4-turbo',
+      model: process.env.OPENAI_API_MODEL || 'gpt-5-mini',
       stream: true,
       messages: [
         { role: 'system', content: systemPrompt },

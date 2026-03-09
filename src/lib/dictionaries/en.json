@@ -605,6 +605,15 @@
       "shipping": "Shipping Information",
       "summary": "Confirm Your Order"
     },
+    "recipeTypeDescriptions": {
+      "cake": "A classic base, perfect for celebrations and special events.",
+      "cupcake": "Individual portions of joy, ideal for sharing or as a treat for yourself."
+    },
+    "sizeDetails": {
+      "portions": "Portions",
+      "height": "Height",
+      "diameter": "Diameter"
+    },
     "authChoiceStep": {
       "title": "Almost ready to continue",
       "description": "To save your shipping information and continue, please log in to your account or create a new one.",
