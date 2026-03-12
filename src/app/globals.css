@@ -3,59 +3,64 @@
 @tailwind utilities;
 
 @layer base {
+  /* =====================================================
+     Propuesta C — "Moderno & Audaz" ✓ SELECCIONADA
+     Concepto: Urbano, contemporáneo, millennial/Gen Z
+     Seleccionada: 2026-03-11
+     ===================================================== */
   :root {
-    --background: 43 100% 98%;
-    --foreground: 25 55% 15%;
-    --card: 39 88% 93%;
-    --card-foreground: 25 55% 15%;
-    --popover: 43 100% 98%;
-    --popover-foreground: 25 55% 15%;
-    --primary: 356 79% 59%;
+    --background: 37 90% 96%;       /* Crema Caliente #FDF6EC */
+    --foreground: 0 0% 10%;         /* Casi Negro #1A1A1A */
+    --card: 38 27% 88%;             /* Gris Cálido #EDE8DF */
+    --card-foreground: 0 0% 10%;    /* Casi Negro */
+    --popover: 37 90% 96%;          /* Crema Caliente */
+    --popover-foreground: 0 0% 10%;
+    --primary: 350 70% 36%;         /* Rojo Cereza #9B1B30 */
     --primary-foreground: 0 0% 100%;
-    --secondary: 15 35% 55%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 39 88% 93%;
-    --muted-foreground: 25 25% 45%;
-    --accent: 15 35% 55%;
+    --secondary: 44 79% 46%;        /* Mostaza Ámbar #D4A017 */
+    --secondary-foreground: 0 0% 10%;
+    --muted: 38 27% 88%;            /* Gris Cálido */
+    --muted-foreground: 25 10% 44%; /* Gris medio #7A6E63 */
+    --accent: 224 63% 33%;          /* Azul Cobalto #1E3A8A */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 39 50% 85%;
-    --input: 39 50% 85%;
-    --ring: 356 79% 59%;
+    --border: 37 24% 75%;           /* Gris suave #D1C4B0 */
+    --input: 37 24% 75%;
+    --ring: 350 70% 36%;            /* Rojo Cereza */
     --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: 350 70% 36%;         /* Rojo Cereza */
+    --chart-2: 44 79% 46%;          /* Mostaza Ámbar */
+    --chart-3: 224 63% 33%;         /* Azul Cobalto */
+    --chart-4: 43 74% 66%;          /* Amarillo claro */
+    --chart-5: 27 87% 67%;          /* Naranja claro */
   }
 
   .dark {
-    --background: 25 55% 10%;
-    --foreground: 43 100% 98%;
-    --card: 25 55% 12%;
-    --card-foreground: 43 100% 98%;
-    --popover: 25 55% 10%;
-    --popover-foreground: 43 100% 98%;
-    --primary: 356 79% 59%;
+    --background: 0 0% 6%;          /* Casi negro #0F0F0F */
+    --foreground: 0 0% 96%;         /* Casi blanco #F5F5F5 */
+    --card: 0 0% 11%;               /* Negro suave #1C1C1C */
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 350 54% 49%;         /* Rojo Cereza claro #C4364F */
     --primary-foreground: 0 0% 100%;
-    --secondary: 15 35% 55%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 25 55% 12%;
-    --muted-foreground: 39 30% 70%;
-    --accent: 15 35% 55%;
+    --secondary: 44 70% 55%;        /* Mostaza Ámbar claro */
+    --secondary-foreground: 0 0% 10%;
+    --muted: 0 0% 11%;
+    --muted-foreground: 25 8% 60%;
+    --accent: 224 55% 50%;          /* Azul Cobalto claro */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 25 55% 20%;
-    --input: 25 55% 20%;
-    --ring: 356 79% 59%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 350 54% 49%;
+    --chart-1: 350 54% 49%;
+    --chart-2: 44 70% 55%;
+    --chart-3: 224 55% 50%;
+    --chart-4: 43 60% 60%;
+    --chart-5: 27 70% 60%;
   }
 }
 
