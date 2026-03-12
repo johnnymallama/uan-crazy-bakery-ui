@@ -165,6 +165,7 @@ export async function getOrdersByUserId(usuarioId: string): Promise<Order[]> {
  */
 export interface AddNoteRequest {
   nota: string;
+  usuarioId: string;
 }
 
 /**

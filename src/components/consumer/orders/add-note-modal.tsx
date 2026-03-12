@@ -51,7 +51,7 @@ export function NotesModal({ isOpen, onClose, order, dictionary, onNoteAdded }: 
 
     setIsLoading(true);
     try {
-      await addNoteToOrder(order.id, { nota: note });
+      await addNoteToOrder(order.id, { nota: note, usuarioId: user!.uid });
       toast({
         title: toasts.addNoteSuccess.title,
         description: toasts.addNoteSuccess.description,

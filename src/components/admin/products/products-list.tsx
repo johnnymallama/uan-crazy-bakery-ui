@@ -21,11 +21,10 @@ const productTypes = [
 
 interface ProductsListProps {
   dictionary: Dictionary;
-  initialProducts: Product[];
 }
 
-export default function ProductsList({ dictionary, initialProducts }: ProductsListProps) {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+export default function ProductsList({ dictionary }: ProductsListProps) {
+  const [products, setProducts] = useState<Product[]>([]);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,12 +40,8 @@ export default function ProductsList({ dictionary, initialProducts }: ProductsLi
   };
 
   useEffect(() => {
-    if (selectedType !== null) {
-      fetchProducts(selectedType);
-    } else {
-      setProducts(initialProducts);
-    }
-  }, [selectedType, initialProducts]);
+    fetchProducts(selectedType);
+  }, [selectedType]);
 
   const handleTypeSelect = (type: string | null) => {
     setSelectedType(type);

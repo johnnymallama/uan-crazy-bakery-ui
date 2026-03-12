@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User } from '@/lib/types/user';
+import { getUsers } from '@/lib/api';
 import { getDictionary } from '@/lib/get-dictionary';
 import { UsersTable } from './users-table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,14 +11,17 @@ import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 
 interface UsersPageProps {
-  users: User[];
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
   lang: string;
 }
 
-export function UsersPage({ users: initialUsers, dictionary, lang }: UsersPageProps) {
-  const [users, setUsers] = useState<User[]>(initialUsers);
+export function UsersPage({ dictionary, lang }: UsersPageProps) {
+  const [users, setUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    getUsers().then(setUsers).catch(console.error);
+  }, []);
 
   const filteredUsers = users.filter(user =>
     (user.nombre.toLowerCase() + ' ' + user.apellido.toLowerCase()).includes(searchTerm.toLowerCase()) ||

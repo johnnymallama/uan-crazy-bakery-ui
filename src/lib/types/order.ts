@@ -4,10 +4,11 @@ import { Receta } from './receta';
 // As per the class diagram
 export type Estado = 'CREADO' | 'CONFIRMADO' | 'EN_PROCESO' | 'LISTO' | 'ENTREGADO' | 'CANCELADO';
 
-// Assuming Nota is a simple object with a string message
 export interface Nota {
   id: number;
-  texto: string;
+  fechaCreacion: string;
+  nota: string;
+  usuarioNombre: string;
 }
 
 export interface Order {

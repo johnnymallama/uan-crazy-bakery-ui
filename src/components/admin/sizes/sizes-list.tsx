@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { getTamanos } from '@/lib/api';
 import { Tamano } from '@/lib/types/tamano';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -28,13 +29,16 @@ import { AddGrammageDialog } from './add-grammage-dialog';
 import { ViewGrammageDialog } from './view-grammage-dialog';
 
 interface SizesListProps {
-  initialSizes: Tamano[];
   dictionary: any;
   lang: string;
 }
 
-export function SizesList({ initialSizes, dictionary, lang }: SizesListProps) {
-  const [sizes, setSizes] = useState<Tamano[]>(initialSizes);
+export function SizesList({ dictionary, lang }: SizesListProps) {
+  const [sizes, setSizes] = useState<Tamano[]>([]);
+
+  useEffect(() => {
+    getTamanos().then(setSizes).catch(console.error);
+  }, []);
   const [selectedRecipeType, setSelectedRecipeType] = useState<'cake' | 'cupcake'>('cake');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
