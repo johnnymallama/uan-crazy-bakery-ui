@@ -1,5 +1,4 @@
-
-const BASE_URL = 'https://crazy-bakery-bk-835393530868.us-central1.run.app';
+import { apiFetch, BASE_URL } from '@/lib/api-fetch';
 
 // --- Crear Orden ---
 
@@ -27,7 +26,7 @@ export interface CrearOrdenResponse {
  * @returns Una promesa que resuelve con la respuesta del backend, incluyendo el ID de la orden creada.
  */
 export async function crearOrden(data: CrearOrdenRequest): Promise<CrearOrdenResponse> {
-  const response = await fetch(`${BASE_URL}/orden`, {
+  const response = await apiFetch(`${BASE_URL}/orden`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -70,7 +69,7 @@ export async function agregarRecetaAOrden(
     ordenId: number, 
     data: AgregarRecetaRequest
 ): Promise<AgregarRecetaResponse> {
-  const response = await fetch(`${BASE_URL}/orden/${ordenId}/receta`, {
+  const response = await apiFetch(`${BASE_URL}/orden/${ordenId}/receta`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -136,7 +135,7 @@ export async function getOrdersByUserId(usuarioId: string): Promise<Order[]> {
   const url = `${BASE_URL}/orden/usuario/${usuarioId}`;
 
   try {
-    const response = await fetch(url, {
+    const response = await apiFetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -178,7 +177,7 @@ export async function addNoteToOrder(
   orderId: number,
   data: AddNoteRequest
 ): Promise<Order> {
-  const response = await fetch(`${BASE_URL}/orden/${orderId}/nota`, {
+  const response = await apiFetch(`${BASE_URL}/orden/${orderId}/nota`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -221,7 +220,7 @@ export async function updateOrderStatus(
   orderId: number,
   data: UpdateStatusRequest
 ): Promise<Order> {
-  const response = await fetch(`${BASE_URL}/orden/${orderId}/estado`, {
+  const response = await apiFetch(`${BASE_URL}/orden/${orderId}/estado`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

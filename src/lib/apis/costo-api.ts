@@ -1,5 +1,4 @@
-
-const BASE_URL = 'https://crazy-bakery-bk-835393530868.us-central1.run.app';
+import { apiFetch, BASE_URL } from '@/lib/api-fetch';
 
 // Interfaces para la solicitud y respuesta del cálculo de costo
 export interface CalcularCostoRequest {
@@ -19,7 +18,7 @@ export interface CalcularCostoResponse {
  * @returns Una promesa que resuelve con la respuesta del cálculo de costo.
  */
 export async function calcularCostoPedido(data: CalcularCostoRequest): Promise<CalcularCostoResponse> {
-  const response = await fetch(`${BASE_URL}/costo/calcular`, {
+  const response = await apiFetch(`${BASE_URL}/costo/calcular`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

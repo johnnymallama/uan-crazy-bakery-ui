@@ -5,15 +5,14 @@ import { IngredienteTamanoDetalle } from './types/ingrediente-tamano-detalle';
 import { Product } from './types/product';
 import { ProductType } from './types/product-type';
 import { Order, Estado } from './types/order';
-
-const BASE_URL = 'https://crazy-bakery-bk-835393530868.us-central1.run.app';
+import { apiFetch, BASE_URL } from './api-fetch';
 
 /**
  * Fetches all users from the backend.
  * @returns A promise that resolves to an array of users.
  */
 export async function getUsers(): Promise<User[]> {
-  const response = await fetch(`${BASE_URL}/usuarios`, {
+  const response = await apiFetch(`${BASE_URL}/usuarios`, {
     cache: 'no-store',
   });
 
@@ -31,7 +30,7 @@ export async function getUsers(): Promise<User[]> {
  * @returns The response from the server.
  */
 export async function createUser(userData: any) {
-  const response = await fetch(`${BASE_URL}/usuarios`, {
+  const response = await apiFetch(`${BASE_URL}/usuarios`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -53,7 +52,7 @@ export async function createUser(userData: any) {
  * @returns The user's data from the backend.
  */
 export async function getUserById(uid: string) {
-  const response = await fetch(`${BASE_URL}/usuarios/${uid}`);
+  const response = await apiFetch(`${BASE_URL}/usuarios/${uid}`);
 
   if (!response.ok) {
     throw new Error('User not found in database.');
@@ -68,7 +67,7 @@ export async function getUserById(uid: string) {
  * @returns The response from the server.
  */
 export async function deleteUser(userId: string) {
-  const response = await fetch(`${BASE_URL}/usuarios/${userId}`,
+  const response = await apiFetch(`${BASE_URL}/usuarios/${userId}`,
   {
     method: 'DELETE',
   });
@@ -87,7 +86,7 @@ export async function deleteUser(userId: string) {
  * @returns The response from the server.
  */
 export async function updateUser(userId: string, userData: Partial<User>) {
-  const response = await fetch(`${BASE_URL}/usuarios/${userId}`,
+  const response = await apiFetch(`${BASE_URL}/usuarios/${userId}`,
   {
     method: 'PUT',
     headers: {
@@ -109,7 +108,7 @@ export async function updateUser(userId: string, userData: Partial<User>) {
  * @returns The response from the server.
  */
 export async function createTamano(tamanoData: CreateTamanoPayload): Promise<Tamano> {
-  const response = await fetch(`${BASE_URL}/tamanos`, {
+  const response = await apiFetch(`${BASE_URL}/tamanos`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -130,7 +129,7 @@ export async function createTamano(tamanoData: CreateTamanoPayload): Promise<Tam
  * @returns A promise that resolves to an array of tamanos.
  */
 export async function getTamanos(): Promise<Tamano[]> {
-  const response = await fetch(`${BASE_URL}/tamanos`, {
+  const response = await apiFetch(`${BASE_URL}/tamanos`, {
     cache: 'no-store',
   });
 
@@ -148,7 +147,7 @@ export async function getTamanos(): Promise<Tamano[]> {
  * @returns The tamano's data from the backend.
  */
 export async function getTamanoById(id: number): Promise<Tamano> {
-  const response = await fetch(`${BASE_URL}/tamanos/${id}`);
+  const response = await apiFetch(`${BASE_URL}/tamanos/${id}`);
 
   if (!response.ok) {
     throw new Error('Tamano not found in database.');
@@ -164,7 +163,7 @@ export async function getTamanoById(id: number): Promise<Tamano> {
  * @returns The response from the server.
  */
 export async function updateTamano(id: number, tamanoData: UpdateTamanoPayload): Promise<Tamano> {
-  const response = await fetch(`${BASE_URL}/tamanos/${id}`, {
+  const response = await apiFetch(`${BASE_URL}/tamanos/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -185,7 +184,7 @@ export async function updateTamano(id: number, tamanoData: UpdateTamanoPayload):
  * @returns The response from the server.
  */
 export async function deleteTamano(id: number): Promise<void> {
-  const response = await fetch(`${BASE_URL}/tamanos/${id}`, {
+  const response = await apiFetch(`${BASE_URL}/tamanos/${id}`, {
     method: 'DELETE',
   });
 
@@ -200,7 +199,7 @@ export async function deleteTamano(id: number): Promise<void> {
  * @returns The response from the server.
  */
 export const addIngredienteTamano = async (data: IngredienteTamano): Promise<any> => {
-  const response = await fetch(`${BASE_URL}/ingrediente-tamano`, {
+  const response = await apiFetch(`${BASE_URL}/ingrediente-tamano`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -222,7 +221,7 @@ export const addIngredienteTamano = async (data: IngredienteTamano): Promise<any
  * @returns A promise that resolves to an array of ingredient grammages.
  */
 export async function getIngredientesPorTamano(tamanoId: number): Promise<IngredienteTamanoDetalle[]> {
-  const response = await fetch(`${BASE_URL}/ingrediente-tamano/${tamanoId}`, {
+  const response = await apiFetch(`${BASE_URL}/ingrediente-tamano/${tamanoId}`, {
     cache: 'no-store',
   });
 
@@ -240,7 +239,7 @@ export async function getIngredientesPorTamano(tamanoId: number): Promise<Ingred
  * @returns The response from the server.
  */
 export async function deleteIngredienteTamano(id: number): Promise<void> {
-  const response = await fetch(`${BASE_URL}/ingrediente-tamano/${id}`, {
+  const response = await apiFetch(`${BASE_URL}/ingrediente-tamano/${id}`, {
     method: 'DELETE',
   });
 
@@ -255,7 +254,7 @@ export async function deleteIngredienteTamano(id: number): Promise<void> {
  * @returns The response from the server.
  */
 export async function createProduct(productData: Omit<Product, 'id'>): Promise<Product> {
-  const response = await fetch(`${BASE_URL}/ingredientes`, {
+  const response = await apiFetch(`${BASE_URL}/ingredientes`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -276,7 +275,7 @@ export async function createProduct(productData: Omit<Product, 'id'>): Promise<P
  * @returns A promise that resolves to an array of products.
  */
 export async function getProducts(): Promise<Product[]> {
-  const response = await fetch(`${BASE_URL}/ingredientes`, {
+  const response = await apiFetch(`${BASE_URL}/ingredientes`, {
     cache: 'no-store',
   });
 
@@ -293,7 +292,7 @@ export async function getProducts(): Promise<Product[]> {
  * @returns A promise that resolves to an array of product types.
  */
 export async function getProductTypes(): Promise<ProductType[]> {
-  const response = await fetch(`${BASE_URL}/tipo-ingredientes`, {
+  const response = await apiFetch(`${BASE_URL}/tipo-ingredientes`, {
     cache: 'no-store',
   });
 
@@ -311,7 +310,7 @@ export async function getProductTypes(): Promise<ProductType[]> {
  * @returns The product's data from the backend.
  */
 export async function getProductById(id: number): Promise<Product> {
-  const response = await fetch(`${BASE_URL}/ingredientes/${id}`);
+  const response = await apiFetch(`${BASE_URL}/ingredientes/${id}`);
 
   if (!response.ok) {
     throw new Error('Product not found in database.');
@@ -327,7 +326,7 @@ export async function getProductById(id: number): Promise<Product> {
  * @returns The response from the server.
  */
 export async function updateProduct(id: number, productData: Partial<Product>): Promise<Product> {
-  const response = await fetch(`${BASE_URL}/ingredientes/${id}`, {
+  const response = await apiFetch(`${BASE_URL}/ingredientes/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -348,7 +347,7 @@ export async function updateProduct(id: number, productData: Partial<Product>): 
  * @returns The response from the server.
  */
 export async function deleteProduct(id: number): Promise<void> {
-  const response = await fetch(`${BASE_URL}/ingredientes/${id}`, {
+  const response = await apiFetch(`${BASE_URL}/ingredientes/${id}`, {
     method: 'DELETE',
   });
 
@@ -363,7 +362,7 @@ export async function deleteProduct(id: number): Promise<void> {
  * @returns A promise that resolves to an array of products.
  */
 export async function getProductsByType(type: string): Promise<Product[]> {
-  const response = await fetch(`${BASE_URL}/ingredientes/tipo/${type}`, {
+  const response = await apiFetch(`${BASE_URL}/ingredientes/tipo/${type}`, {
     cache: 'no-store',
   });
 
@@ -386,7 +385,7 @@ export async function getOrders(status?: Estado | 'ALL'): Promise<Order[]> {
     url = `${BASE_URL}/orden/estado/${status}`;
   }
 
-  const response = await fetch(url, {
+  const response = await apiFetch(url, {
     cache: 'no-store',
   });
 
@@ -420,7 +419,7 @@ export async function updateOrderStatus(orderId: number, newStatus: Estado, note
     body.nota = notes;
   }
 
-  const response = await fetch(`${BASE_URL}/orden/${orderId}/estado`, {
+  const response = await apiFetch(`${BASE_URL}/orden/${orderId}/estado`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

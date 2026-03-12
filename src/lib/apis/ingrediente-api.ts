@@ -1,12 +1,13 @@
 import { Product } from '../types';
+import { apiFetch, BASE_URL } from '@/lib/api-fetch';
 
 export const getIngredients = async (
   tipoReceta: string,
   tamanoId: string,
   tipoIngrediente: string
 ): Promise<Product[]> => {
-  const response = await fetch(
-    `https://crazy-bakery-bk-835393530868.us-central1.run.app/ingredientes/search?tipoReceta=${tipoReceta}&tamanoId=${tamanoId}&tipoIngrediente=${tipoIngrediente}`
+  const response = await apiFetch(
+    `${BASE_URL}/ingredientes/search?tipoReceta=${tipoReceta}&tamanoId=${tamanoId}&tipoIngrediente=${tipoIngrediente}`
   );
 
   if (!response.ok) {

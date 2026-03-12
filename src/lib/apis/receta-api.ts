@@ -1,5 +1,4 @@
-
-const BASE_URL = 'https://crazy-bakery-bk-835393530868.us-central1.run.app';
+import { apiFetch, BASE_URL } from '@/lib/api-fetch';
 
 /**
  * Interfaz para la solicitud de creación de una receta.
@@ -27,7 +26,7 @@ export interface CrearRecetaResponse {
  * @returns Una promesa que resuelve con la respuesta del backend, incluyendo el ID de la receta creada.
  */
 export async function crearReceta(data: CrearRecetaRequest): Promise<CrearRecetaResponse> {
-  const response = await fetch(`${BASE_URL}/receta`, {
+  const response = await apiFetch(`${BASE_URL}/receta`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

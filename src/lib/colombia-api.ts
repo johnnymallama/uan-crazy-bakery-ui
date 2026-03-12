@@ -1,3 +1,4 @@
+import { BASE_URL } from '@/lib/api-fetch';
 
 export interface Department {
   id: number;
@@ -12,7 +13,7 @@ export interface City {
 
 export async function getDepartments(): Promise<Department[]> {
   try {
-    const response = await fetch('https://crazy-bakery-bk-835393530868.us-central1.run.app/geografia/departamentos');
+    const response = await fetch(`${BASE_URL}/geografia/departamentos`);
     if (!response.ok) {
       throw new Error('Failed to fetch departments');
     }
@@ -29,7 +30,7 @@ export async function getDepartments(): Promise<Department[]> {
 
 export async function getCities(): Promise<City[]> {
   try {
-    const response = await fetch('https://crazy-bakery-bk-835393530868.us-central1.run.app/geografia/ciudades');
+    const response = await fetch(`${BASE_URL}/geografia/ciudades`);
     if (!response.ok) {
       throw new Error('Failed to fetch cities');
     }

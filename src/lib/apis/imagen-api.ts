@@ -31,8 +31,10 @@ interface GenerateImageResponse {
   imageUrl: string;
 }
 
+import { apiFetch, BASE_URL } from '@/lib/api-fetch';
+
 // La URL base del servicio de generación de imágenes.
-const API_URL = 'https://crazy-bakery-bk-835393530868.us-central1.run.app/generate-image/custom-cake';
+const API_URL = `${BASE_URL}/generate-image/custom-cake`;
 
 /**
  * Llama al endpoint del backend para generar una imagen de pastel personalizada.
@@ -69,7 +71,7 @@ export const generateCustomCakeImage = async (orderData: OrderDataForImage): Pro
   console.log('Enviando payload para generar imagen:', JSON.stringify(payload, null, 2));
 
   // 3. Realizar la petición POST al backend.
-  const response = await fetch(API_URL, {
+  const response = await apiFetch(API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

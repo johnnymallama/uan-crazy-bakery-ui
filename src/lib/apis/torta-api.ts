@@ -1,5 +1,4 @@
-
-const BASE_URL = 'https://crazy-bakery-bk-835393530868.us-central1.run.app';
+import { apiFetch, BASE_URL } from '@/lib/api-fetch';
 
 /**
  * Interfaz para la solicitud de creación de una torta.
@@ -26,7 +25,7 @@ export interface CrearTortaResponse {
  * @returns Una promesa que resuelve con la respuesta del backend, incluyendo el ID de la torta creada.
  */
 export async function crearTorta(data: CrearTortaRequest): Promise<CrearTortaResponse> {
-  const response = await fetch(`${BASE_URL}/torta`, {
+  const response = await apiFetch(`${BASE_URL}/torta`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

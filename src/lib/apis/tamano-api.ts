@@ -1,6 +1,5 @@
 import { Tamano, TipoReceta } from '../types/tamano';
-
-const BASE_URL = 'https://crazy-bakery-bk-835393530868.us-central1.run.app';
+import { apiFetch, BASE_URL } from '@/lib/api-fetch';
 
 /**
  * Fetches sizes by recipe type from the backend.
@@ -8,7 +7,7 @@ const BASE_URL = 'https://crazy-bakery-bk-835393530868.us-central1.run.app';
  * @returns A promise that resolves to an array of sizes.
  */
 export async function getTamanosByTipoReceta(tipoReceta: TipoReceta): Promise<Tamano[]> {
-  const response = await fetch(`${BASE_URL}/tamanos/tipo-receta/${tipoReceta}`, {
+  const response = await apiFetch(`${BASE_URL}/tamanos/tipo-receta/${tipoReceta}`, {
     cache: 'no-store',
   });
 
