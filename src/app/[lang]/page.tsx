@@ -7,30 +7,42 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShoppingBasket } from "lucide-react";
 import { Locale } from "../../../i18n-config";
 import { getDictionary } from "@/lib/get-dictionary";
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://crazy-bakery-bk-835393530868.us-central1.run.app';
+
+async function getCarouselImages(): Promise<string[]> {
+  try {
+    const res = await fetch(`${BASE_URL}/receta/ultimas-imagenes`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
+}
+
 export default async function Home({
   params: { lang },
 }: {
   params: { lang: Locale };
 }) {
-  const carouselImages = PlaceHolderImages.filter(p => p.id.startsWith("carousel-"));
-  const dictionary = await getDictionary(lang);
+  const [carouselImages, dictionary] = await Promise.all([
+    getCarouselImages(),
+    getDictionary(lang),
+  ]);
 
   return (
     <div className="flex flex-col">
       <section className="relative w-full h-[60vh] md:h-[80vh] flex items-center justify-center text-center text-white">
         <Image
-          src={carouselImages[0]?.imageUrl || "https://picsum.photos/seed/bakery-hero/1920/1080"}
-          alt={carouselImages[0]?.description || "Hero image of a baked good"}
+          src={carouselImages[0] || "https://picsum.photos/seed/bakery-hero/1920/1080"}
+          alt="Hero image of a baked good"
           fill
           className="object-cover brightness-50"
-          data-ai-hint={carouselImages[0]?.imageHint || "bakery interior"}
           priority
         />
         <div className="relative z-10 p-4 space-y-6">
@@ -65,18 +77,17 @@ export default async function Home({
             className="w-full max-w-5xl mx-auto"
           >
             <CarouselContent>
-              {carouselImages.map((img, index) => (
+              {carouselImages.map((url, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <div className="p-1">
                     <Card>
                       <CardContent className="flex aspect-square items-center justify-center p-0 overflow-hidden rounded-lg">
                         <Image
-                          src={img.imageUrl}
-                          alt={img.description}
+                          src={url}
+                          alt={`Creación de la panadería ${index + 1}`}
                           width={600}
                           height={600}
                           className="w-full h-full object-cover transition-transform hover:scale-105"
-                          data-ai-hint={img.imageHint}
                         />
                       </CardContent>
                     </Card>
