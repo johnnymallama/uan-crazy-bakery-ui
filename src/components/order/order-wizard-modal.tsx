@@ -167,6 +167,7 @@ export function OrderWizardModal({
       return;
     }
 
+    const MAX_CHARS = 1500;
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let fullText = '';
@@ -174,6 +175,11 @@ export function OrderWizardModal({
         const { value, done } = await reader.read();
         if (done) break;
         fullText += decoder.decode(value);
+        if (fullText.length >= MAX_CHARS) {
+          fullText = fullText.slice(0, MAX_CHARS);
+          setOrderData(prev => ({ ...prev, customization: fullText }));
+          break;
+        }
         setOrderData(prev => ({ ...prev, customization: fullText }));
     }
     setIsAILoading(false);

@@ -45,8 +45,10 @@ export const CustomizationStep = ({
 
   const { customizationStep: t } = dictionary.orderWizard;
 
+  const MAX_CHARS = 1500;
+
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = event.target.value;
+    const newValue = event.target.value.slice(0, MAX_CHARS);
     setCustomizationText(newValue);
     onValueChange(newValue);
   };
@@ -118,9 +120,13 @@ export const CustomizationStep = ({
               value={customizationText}
               onChange={handleTextChange}
               rows={6}
+              maxLength={MAX_CHARS}
               className="text-sm resize-none bg-background border-2 focus-visible:ring-primary"
               disabled={isBusy}
             />
+            <p className={`text-xs text-right ${customizationText.length >= MAX_CHARS ? 'text-destructive font-semibold' : 'text-muted-foreground'}`}>
+              {customizationText.length} / {MAX_CHARS}
+            </p>
           </div>
 
           {/* Paso 2 */}
@@ -200,6 +206,13 @@ export const CustomizationStep = ({
               </div>
             )}
           </div>
+
+          {/* Aviso legal */}
+          {displayProposal?.imageUrl && !isGenerating && (
+            <p className="text-xs text-muted-foreground italic leading-relaxed border-t pt-2">
+              {t.imageDisclaimer}
+            </p>
+          )}
 
           {/* Botones aceptar / regenerar */}
           {displayProposal?.imageUrl && !isGenerating && (
