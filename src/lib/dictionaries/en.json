@@ -33,30 +33,29 @@
     "location": "123 Dessert Lane, Suite 100, Pastry City, PC 54321",
     "email": "hello@crazybakery.com",
     "phone": "(123) 456-7890",
-    "form": {
-      "name": {
-        "label": "Your Name",
-        "placeholder": "John Doe"
-      },
-      "email": {
-        "label": "Your Email",
-        "placeholder": "you@example.com"
-      },
-      "message": {
-        "label": "Your Message",
-        "placeholder": "Tell us how we can help..."
-      },
-      "submit": "Send Message",
-      "toast": {
-        "title": "Message Sent!",
-        "description": "Thanks for reaching out. We'll get back to you shortly."
-      },
-      "validation": {
-        "nameMin": "Name must be at least 2 characters.",
-        "email": "Please enter a valid email address.",
-        "messageMin": "Message must be at least 10 characters.",
-        "messageMax": "Message cannot exceed 500 characters."
-      }
+    "name": {
+      "label": "Your Name",
+      "placeholder": "John Doe"
+    },
+    "email_field": {
+      "label": "Your Email",
+      "placeholder": "you@example.com"
+    },
+    "message": {
+      "label": "Your Message",
+      "placeholder": "Tell us how we can help..."
+    },
+    "submit": "Send Message",
+    "toast": {
+      "title": "Message Sent!",
+      "description": "Thanks for reaching out. We'll get back to you shortly.",
+      "backToHome": "Back to home"
+    },
+    "validation": {
+      "nameMin": "Name must be at least 2 characters.",
+      "email": "Please enter a valid email address.",
+      "messageMin": "Message must be at least 10 characters.",
+      "messageMax": "Message cannot exceed 500 characters."
     }
   },
   "loginForm": {
@@ -122,6 +121,7 @@
     }
   },
   "privacy": {
+    "linkLabel": "Privacy Policy",
     "title": "Privacy Policy",
     "welcome": "Welcome to the Crazy Bakery privacy policy. Your privacy is important to us.",
     "info": {
@@ -665,17 +665,29 @@
     },
     "customizationStep": {
       "title": "Make it Yours!",
-      "description": "Describe the special occasion and any ideas you have for the decoration. Is it a birthday, an anniversary? What colors, themes, or toppings would you like to see? Our AI will help you refine the details.",
+      "description": "Describe the occasion and your ideas. Our AI will help you refine the details and generate a visual proposal.",
       "placeholder": "E.g., It's for my daughter's 5th birthday. She loves unicorns, rainbows, and pastel colors. I'd like to have colorful sprinkles and the name 'Sofia' on top.",
-      "aiButton": "Let me help with your personalization",
+      "step1Label": "1. Describe your idea",
+      "step2Label": "2. Enhance with AI",
+      "step3Label": "3. Generate design",
+      "aiButton": "Enhance with AI",
       "aiLoading": "Generating ideas...",
-      "generateProposalButton": "Now, would you like to see the design?",
+      "generateProposalButton": "Generate design",
       "proposalLoading": "Creating visual proposal...",
-      "proposalPlaceholder": "The visual proposal for your cake will appear here once you generate it.",
-      "proposalTitle": "Our Visual Proposal",
+      "proposalPlaceholder": "Your design will appear here",
+      "proposalPlaceholderSub": "Complete your description and generate the design to see the visual proposal.",
+      "proposalTitle": "Visual Proposal",
       "proposalError": "Could not generate the proposal. Please try again.",
       "retry": "Retry",
-      "acceptProposal": "I accept the visual proposal for my cake"
+      "acceptButton": "Accept proposal",
+      "regenerateButton": "Regenerate",
+      "acceptedLabel": "Proposal accepted",
+      "summaryTitle": "Your selection",
+      "summaryType": "Type",
+      "summarySize": "Size",
+      "summarySponge": "Sponge",
+      "summaryFilling": "Filling",
+      "summaryCoverage": "Coverage"
     },
     "shippingStep": {
       "fullName": "Full Name",

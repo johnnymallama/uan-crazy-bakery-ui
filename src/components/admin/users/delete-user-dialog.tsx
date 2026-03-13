@@ -28,7 +28,7 @@ export function DeleteUserDialog({ userName, dictionary, onDelete }: DeleteUserD
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
           <Trash2 className="h-4 w-4" />
         </Button>
       </AlertDialogTrigger>

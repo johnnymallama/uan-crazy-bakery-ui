@@ -7,21 +7,9 @@ import { Tamano } from '@/lib/types/tamano';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { Pencil, Trash2, Weight, ClipboardList } from 'lucide-react';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Pencil, Trash2, Weight, ClipboardList, Ruler } from 'lucide-react';
 import { AddSizeDialog } from './add-size-dialog';
 import { EditSizeDialog } from './edit-size-dialog';
 import { DeleteSizeDialog } from './delete-size-dialog';
@@ -35,10 +23,6 @@ interface SizesListProps {
 
 export function SizesList({ dictionary, lang }: SizesListProps) {
   const [sizes, setSizes] = useState<Tamano[]>([]);
-
-  useEffect(() => {
-    getTamanos().then(setSizes).catch(console.error);
-  }, []);
   const [selectedRecipeType, setSelectedRecipeType] = useState<'cake' | 'cupcake'>('cake');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -47,45 +31,14 @@ export function SizesList({ dictionary, lang }: SizesListProps) {
   const [isViewGrammageDialogOpen, setIsViewGrammageDialogOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState<Tamano | null>(null);
 
+  useEffect(() => { getTamanos().then(setSizes).catch(console.error); }, []);
+
   const apiRecipeType = selectedRecipeType === 'cake' ? 'torta' : 'cupcake';
+  const filteredSizes = (sizes || []).filter(Boolean).filter(s => s.tipo_receta?.toLowerCase() === apiRecipeType);
 
-  const filteredSizes = (sizes || [])
-    .filter(Boolean)
-    .filter(size => size.tipo_receta?.toLowerCase() === apiRecipeType);
-
-  const handleSizeAdded = (newSize: Tamano) => {
-    setSizes(prevSizes => [...prevSizes, newSize]);
-  };
-
-  const handleSizeUpdated = (updatedSize: Tamano) => {
-    setSizes(prevSizes =>
-      prevSizes.map(size => (size.id === updatedSize.id ? updatedSize : size))
-    );
-  };
-
-  const handleSizeDeleted = (deletedSizeId: number) => {
-    setSizes(prevSizes => prevSizes.filter(size => size.id !== deletedSizeId));
-  };
-
-  const openEditDialog = (size: Tamano) => {
-    setSelectedSize(size);
-    setIsEditDialogOpen(true);
-  };
-
-  const openDeleteDialog = (size: Tamano) => {
-    setSelectedSize(size);
-    setIsDeleteDialogOpen(true);
-  };
-
-  const openAddGrammageDialog = (size: Tamano) => {
-    setSelectedSize(size);
-    setIsAddGrammageDialogOpen(true);
-  };
-
-  const openViewGrammageDialog = (size: Tamano) => {
-    setSelectedSize(size);
-    setIsViewGrammageDialogOpen(true);
-  };
+  const handleSizeAdded = (s: Tamano) => setSizes(prev => [...prev, s]);
+  const handleSizeUpdated = (s: Tamano) => setSizes(prev => prev.map(x => x.id === s.id ? s : x));
+  const handleSizeDeleted = (id: number) => setSizes(prev => prev.filter(x => x.id !== id));
 
   return (
     <TooltipProvider>
@@ -104,22 +57,23 @@ export function SizesList({ dictionary, lang }: SizesListProps) {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {/* Sidebar */}
           <aside className="md:col-span-1">
             <Card>
               <CardHeader>
-                <CardTitle>{dictionary.adminSizesPage.recipeTypeTitle}</CardTitle>
+                <CardTitle className="text-base">{dictionary.adminSizesPage.recipeTypeTitle}</CardTitle>
               </CardHeader>
-              <CardContent className="flex flex-col space-y-2">
+              <CardContent className="flex flex-col space-y-1 pt-0">
                 <Button
-                  variant={selectedRecipeType === 'cake' ? 'secondary' : 'ghost'}
+                  variant={selectedRecipeType === 'cake' ? 'default' : 'ghost'}
                   onClick={() => setSelectedRecipeType('cake')}
                   className="justify-start"
                 >
                   {dictionary.adminSizesPage.recipeTypes.cake}
                 </Button>
                 <Button
-                  variant={selectedRecipeType === 'cupcake' ? 'secondary' : 'ghost'}
+                  variant={selectedRecipeType === 'cupcake' ? 'default' : 'ghost'}
                   onClick={() => setSelectedRecipeType('cupcake')}
                   className="justify-start"
                 >
@@ -129,6 +83,7 @@ export function SizesList({ dictionary, lang }: SizesListProps) {
             </Card>
           </aside>
 
+          {/* Tabla */}
           <main className="md:col-span-3">
             <Card>
               <CardHeader>
@@ -139,75 +94,72 @@ export function SizesList({ dictionary, lang }: SizesListProps) {
                   </Button>
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-0">
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>{dictionary.adminSizesPage.sizesTable.headers.name}</TableHead>
-                      <TableHead>{dictionary.adminSizesPage.sizesTable.headers.height}</TableHead>
-                      <TableHead>{dictionary.adminSizesPage.sizesTable.headers.diameter}</TableHead>
-                      <TableHead>{dictionary.adminSizesPage.sizesTable.headers.portions}</TableHead>
-                      <TableHead>{dictionary.adminSizesPage.sizesTable.headers.time}</TableHead>
-                      <TableHead>{dictionary.adminSizesPage.sizesTable.headers.actions}</TableHead>
+                    <TableRow className="bg-primary/10 hover:bg-primary/10">
+                      <TableHead className="font-semibold text-foreground">{dictionary.adminSizesPage.sizesTable.headers.name}</TableHead>
+                      <TableHead className="font-semibold text-foreground text-right">{dictionary.adminSizesPage.sizesTable.headers.height}</TableHead>
+                      <TableHead className="font-semibold text-foreground text-right">{dictionary.adminSizesPage.sizesTable.headers.diameter}</TableHead>
+                      <TableHead className="font-semibold text-foreground text-right">{dictionary.adminSizesPage.sizesTable.headers.portions}</TableHead>
+                      <TableHead className="font-semibold text-foreground text-right">{dictionary.adminSizesPage.sizesTable.headers.time}</TableHead>
+                      <TableHead className="font-semibold text-foreground text-right">{dictionary.adminSizesPage.sizesTable.headers.actions}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredSizes.length > 0 ? (
-                      filteredSizes.map(size => (
-                        <TableRow key={size.id}>
-                          <TableCell>{size.nombre}</TableCell>
-                          <TableCell>{size.alto}</TableCell>
-                          <TableCell>{size.diametro}</TableCell>
-                          <TableCell>{size.porciones}</TableCell>
-                          <TableCell>{size.tiempo}</TableCell>
-                          <TableCell className="space-x-2">
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button variant="outline" size="icon" onClick={() => openViewGrammageDialog(size)}>
-                                  <ClipboardList className="h-4 w-4" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{dictionary.adminSizesPage.sizesTable.actions.tooltips.viewGrammage}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button variant="outline" size="icon" onClick={() => openAddGrammageDialog(size)}>
-                                  <Weight className="h-4 w-4" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{dictionary.adminSizesPage.sizesTable.actions.tooltips.addGrammage}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button variant="outline" size="icon" onClick={() => openEditDialog(size)}>
-                                  <Pencil className="h-4 w-4" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{dictionary.adminSizesPage.sizesTable.actions.tooltips.edit}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button variant="outline" size="icon" onClick={() => openDeleteDialog(size)}>
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{dictionary.adminSizesPage.sizesTable.actions.tooltips.delete}</p>
-                              </TooltipContent>
-                            </Tooltip>
+                      filteredSizes.map((size, i) => (
+                        <TableRow key={size.id} className={i % 2 === 0 ? 'bg-background' : 'bg-muted/30'}>
+                          <TableCell className="font-medium">{size.nombre}</TableCell>
+                          <TableCell className="text-right text-sm">{size.alto}</TableCell>
+                          <TableCell className="text-right text-sm">{size.diametro}</TableCell>
+                          <TableCell className="text-right text-sm">{size.porciones}</TableCell>
+                          <TableCell className="text-right text-sm">{size.tiempo}</TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex justify-end gap-1">
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => { setSelectedSize(size); setIsViewGrammageDialogOpen(true); }}>
+                                    <ClipboardList className="h-4 w-4" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent><p>{dictionary.adminSizesPage.sizesTable.actions.tooltips.viewGrammage}</p></TooltipContent>
+                              </Tooltip>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => { setSelectedSize(size); setIsAddGrammageDialogOpen(true); }}>
+                                    <Weight className="h-4 w-4" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent><p>{dictionary.adminSizesPage.sizesTable.actions.tooltips.addGrammage}</p></TooltipContent>
+                              </Tooltip>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => { setSelectedSize(size); setIsEditDialogOpen(true); }}>
+                                    <Pencil className="h-4 w-4" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent><p>{dictionary.adminSizesPage.sizesTable.actions.tooltips.edit}</p></TooltipContent>
+                              </Tooltip>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => { setSelectedSize(size); setIsDeleteDialogOpen(true); }}>
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent><p>{dictionary.adminSizesPage.sizesTable.actions.tooltips.delete}</p></TooltipContent>
+                              </Tooltip>
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))
                     ) : (
                       <TableRow>
-                        <TableCell colSpan={6} className="text-center">
-                          {dictionary.adminSizesPage.sizesTable.noSizes}
+                        <TableCell colSpan={6} className="h-32 text-center">
+                          <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                            <Ruler className="h-8 w-8" />
+                            <span>{dictionary.adminSizesPage.sizesTable.noSizes}</span>
+                          </div>
                         </TableCell>
                       </TableRow>
                     )}
@@ -218,44 +170,11 @@ export function SizesList({ dictionary, lang }: SizesListProps) {
           </main>
         </div>
 
-        <AddSizeDialog
-          isOpen={isAddDialogOpen}
-          onClose={() => setIsAddDialogOpen(false)}
-          onSizeAdded={handleSizeAdded}
-          recipeType={apiRecipeType}
-          dictionary={dictionary}
-        />
-
-        <EditSizeDialog
-          isOpen={isEditDialogOpen}
-          onClose={() => setIsEditDialogOpen(false)}
-          onSizeUpdated={handleSizeUpdated}
-          size={selectedSize}
-          dictionary={dictionary}
-        />
-
-        <DeleteSizeDialog
-          isOpen={isDeleteDialogOpen}
-          onClose={() => setIsDeleteDialogOpen(false)}
-          onSizeDeleted={handleSizeDeleted}
-          size={selectedSize}
-          dictionary={dictionary}
-        />
-
-        <AddGrammageDialog
-          isOpen={isAddGrammageDialogOpen}
-          onClose={() => setIsAddGrammageDialogOpen(false)}
-          size={selectedSize}
-          dictionary={dictionary}
-          recipeType={selectedRecipeType}
-        />
-
-        <ViewGrammageDialog
-          isOpen={isViewGrammageDialogOpen}
-          onClose={() => setIsViewGrammageDialogOpen(false)}
-          size={selectedSize}
-          dictionary={dictionary}
-        />
+        <AddSizeDialog isOpen={isAddDialogOpen} onClose={() => setIsAddDialogOpen(false)} onSizeAdded={handleSizeAdded} recipeType={apiRecipeType} dictionary={dictionary} />
+        <EditSizeDialog isOpen={isEditDialogOpen} onClose={() => setIsEditDialogOpen(false)} onSizeUpdated={handleSizeUpdated} size={selectedSize} dictionary={dictionary} />
+        <DeleteSizeDialog isOpen={isDeleteDialogOpen} onClose={() => setIsDeleteDialogOpen(false)} onSizeDeleted={handleSizeDeleted} size={selectedSize} dictionary={dictionary} />
+        <AddGrammageDialog isOpen={isAddGrammageDialogOpen} onClose={() => setIsAddGrammageDialogOpen(false)} size={selectedSize} dictionary={dictionary} recipeType={selectedRecipeType} />
+        <ViewGrammageDialog isOpen={isViewGrammageDialogOpen} onClose={() => setIsViewGrammageDialogOpen(false)} size={selectedSize} dictionary={dictionary} />
       </div>
     </TooltipProvider>
   );

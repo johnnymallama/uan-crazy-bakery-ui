@@ -12,13 +12,13 @@ const orderDictionaries = {
 };
 
 const privacyDictionaries = {
-  en: () => import('@/lib/dictionaries/privacy.json').then((module) => module.default),
-  es: () => import('@/lib/dictionaries/privacy.json').then((module) => module.default),
+  en: () => import('@/lib/dictionaries/privacy.en.json').then((module) => module.default),
+  es: () => import('@/lib/dictionaries/privacy.es.json').then((module) => module.default),
 };
 
 const termsDictionaries = {
-  en: () => import('@/lib/dictionaries/terms.json').then((module) => module.default),
-  es: () => import('@/lib/dictionaries/terms.json').then((module) => module.default),
+  en: () => import('@/lib/dictionaries/terms.en.json').then((module) => module.default),
+  es: () => import('@/lib/dictionaries/terms.es.json').then((module) => module.default),
 };
 
 export const getDictionary = async (locale: Locale) => {

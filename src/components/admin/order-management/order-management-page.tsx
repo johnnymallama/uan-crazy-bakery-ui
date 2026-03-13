@@ -7,6 +7,9 @@ import { Order, Estado } from '@/lib/types/order';
 import { OrdersTable } from './orders-table';
 import { StatusFilter } from './status-filter';
 import { getDictionary } from '@/lib/get-dictionary';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 
 interface OrderManagementPageProps {
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
@@ -17,7 +20,6 @@ export function OrderManagementPage({ dictionary, lang }: OrderManagementPagePro
   const [orders, setOrders] = useState<Order[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<Estado | 'ALL'>('ALL');
 
@@ -26,94 +28,86 @@ export function OrderManagementPage({ dictionary, lang }: OrderManagementPagePro
 
   const fetchOrders = useCallback(async (status: Estado | 'ALL') => {
     setIsLoading(true);
-    setError(null);
     try {
       const fetchedOrders = await getOrders(status);
       setOrders(fetchedOrders);
-    } catch (err: any) {
-      setOrders([]); // Clear orders on error
+    } catch {
+      setOrders([]);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  useEffect(() => {
-    fetchOrders(selectedStatus);
-  }, [fetchOrders, selectedStatus]);
+  useEffect(() => { fetchOrders(selectedStatus); }, [fetchOrders, selectedStatus]);
 
   useEffect(() => {
-    let currentOrders = orders;
-
-    if (searchTerm) {
-      currentOrders = currentOrders.filter(order =>
-        order.id.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (order.usuario && `${order.usuario.nombre} ${order.usuario.apellido}`.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
-    }
-
-    setFilteredOrders(currentOrders);
+    if (!searchTerm) { setFilteredOrders(orders); return; }
+    setFilteredOrders(orders.filter(order =>
+      order.id.toString().includes(searchTerm.toLowerCase()) ||
+      (order.usuario && `${order.usuario.nombre} ${order.usuario.apellido}`.toLowerCase().includes(searchTerm.toLowerCase()))
+    ));
   }, [searchTerm, orders]);
-
-  const handleStatusChange = (newStatus: Estado | 'ALL') => {
-    setSelectedStatus(newStatus);
-  };
 
   const handleUpdateStatus = async (orderId: number, newStatus: Estado, notes?: string) => {
     try {
-      const updatedOrder = await updateOrderStatus(orderId, newStatus, notes);
-      const updatedOrders = orders.map(order =>
-        order.id === orderId ? updatedOrder : order
-      );
-      setOrders(updatedOrders);
+      const updated = await updateOrderStatus(orderId, newStatus, notes);
+      setOrders(prev => prev.map(o => o.id === orderId ? updated : o));
     } catch (error) {
-      console.error("Failed to update order status:", error);
+      console.error('Failed to update order status:', error);
     }
   };
 
   return (
-    <div className="container mx-auto p-4 md:p-8 font-sans">
-      <div className="flex items-center mb-6 text-sm text-gray-500">
-        <Link href={`/${lang}/dashboard/admin`} className="hover:text-red-500 transition-colors">
-          {pageDict.breadcrumb || 'Volver al Dashboard'}
-        </Link>
-        <span className="mx-2">›</span>
-        <span className="text-gray-800">{pageDict.title || 'Gestión de Pedidos'}</span>
-      </div>
+    <div className="space-y-6 w-full">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/${lang}/dashboard/admin`}>{pageDict.breadcrumb || 'Volver al Dashboard'}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{pageDict.title || 'Gestión de Pedidos'}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <div className="lg:col-span-1">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <aside className="lg:col-span-1">
           <StatusFilter
             dictionary={dictionary}
             selectedStatus={selectedStatus}
-            onChange={handleStatusChange}
+            onChange={setSelectedStatus}
           />
-        </div>
+        </aside>
 
-        <div className="lg:col-span-3 bg-transparent p-6 rounded-lg">
-          <h2 className="font-playfair text-[24px] font-bold mb-4 text-[#3b2311]">{tableDict.title || 'Pedidos'}</h2>
-          <div className="mb-4">
-            <input
-              type="text"
-              placeholder={tableDict.searchPlaceholder || 'Filtrar por ID de pedido o cliente...'}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-          {isLoading ? (
-            <p>Cargando pedidos...</p>
-          ) : error ? (
-            <p className="text-red-500">{error}</p>
-          ) : filteredOrders.length > 0 ? (
-            <OrdersTable
-              orders={filteredOrders}
-              dictionary={dictionary}
-              onStatusChange={handleUpdateStatus}
-            />
-          ) : (
-            <p>{tableDict.noOrders || 'No hay pedidos para mostrar.'}</p>
-          )}
-        </div>
+        <main className="lg:col-span-3">
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>{tableDict.title || 'Pedidos'}</CardTitle>
+              </div>
+              <Input
+                placeholder={tableDict.searchPlaceholder || 'Filtrar por ID de pedido o cliente...'}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="mt-2"
+              />
+            </CardHeader>
+            <CardContent className="p-0">
+              {isLoading ? (
+                <p className="text-center text-muted-foreground py-12">Cargando pedidos...</p>
+              ) : (
+                <OrdersTable
+                  orders={filteredOrders}
+                  dictionary={dictionary}
+                  onStatusChange={handleUpdateStatus}
+                />
+              )}
+            </CardContent>
+          </Card>
+        </main>
       </div>
     </div>
   );

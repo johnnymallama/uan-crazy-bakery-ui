@@ -2,7 +2,8 @@
 
 import { Estado } from '@/lib/types/order';
 import { getDictionary } from '@/lib/get-dictionary';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface StatusFilterProps {
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
@@ -15,33 +16,26 @@ export function StatusFilter({ dictionary, selectedStatus, onChange }: StatusFil
   const pageDict = dictionary.adminOrderManagementPage || {};
   const statusDict = pageDict.orderStatus || {};
 
-  const getStatusName = (status: Estado | 'ALL') => {
-    if (status === 'ALL') {
-      return statusDict.all || 'All Statuses';
-    }
-    return statusDict[status] || status;
-  };
+  const getStatusName = (status: Estado | 'ALL') =>
+    status === 'ALL' ? (statusDict.all || 'All Statuses') : (statusDict[status] || status);
 
   return (
-    <div className="p-6 rounded-lg bg-orange-50 font-sans text-sm">
-      <h3 className="font-playfair text-[20px] font-semibold mb-4 text-[#3b2311]">{statusDict.title || 'Filtrar por Estado'}</h3>
-      <ul className="space-y-2">
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">{statusDict.title || 'Filtrar por Estado'}</CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col space-y-1 pt-0">
         {orderStatuses.map(status => (
-          <li key={status}>
-            <button
-              onClick={() => onChange(status)}
-              className={cn(
-                'w-full text-left px-4 py-2 rounded-md transition-colors duration-200',
-                selectedStatus === status
-                  ? 'bg-red-500 text-white shadow-md'
-                  : 'hover:bg-red-100 text-gray-700'
-              )}
-            >
-              {getStatusName(status)}
-            </button>
-          </li>
+          <Button
+            key={status}
+            variant={selectedStatus === status ? 'default' : 'ghost'}
+            onClick={() => onChange(status)}
+            className="justify-start"
+          >
+            {getStatusName(status)}
+          </Button>
         ))}
-      </ul>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

@@ -1,0 +1,19 @@
+{
+  "terms": {
+    "linkLabel": "Términos de Servicio",
+    "title": "Términos de Servicio",
+    "welcome": "Bienvenido a los términos de servicio de Dulce Manía. Al utilizar nuestro sitio web, aceptas estos términos.",
+    "acceptance": {
+      "title": "Aceptación de los Términos",
+      "p1": "Al acceder y utilizar nuestro sitio web, aceptas estar sujeto a estos Términos de Servicio y a nuestra Política de Privacidad."
+    },
+    "orders": {
+      "title": "Pedidos y Pagos",
+      "p1": "Todos los pedidos están sujetos a disponibilidad y a nuestra aceptación. Nos reservamos el derecho de rechazar o cancelar un pedido en cualquier momento."
+    },
+    "intellectualProperty": {
+      "title": "Propiedad Intelectual",
+      "p1": "Todo el contenido de este sitio web, incluyendo texto, gráficos, logotipos e imágenes, es de nuestra propiedad y está protegido por las leyes de derechos de autor."
+    }
+  }
+}

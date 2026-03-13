@@ -28,7 +28,7 @@ export async function Header({ lang }: { lang: Locale }) {
         <Link href={`/${lang}`} className="flex items-center gap-2">
           <Logo className="h-10 w-auto text-primary" />
           <span className="font-headline text-2xl font-bold text-foreground -ml-2">
-            Dulce Manía
+            Dulce Manía de Lucky
           </span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
@@ -60,7 +60,7 @@ export async function Header({ lang }: { lang: Locale }) {
                 <Link href={`/${lang}`} className="flex items-center gap-2 mb-4">
                   <Logo className="h-10 w-auto text-primary" />
                   <span className="font-headline text-2xl font-bold text-foreground -ml-2">
-                    Dulce Manía
+                    Dulce Manía de Lucky
                   </span>
                 </Link>
                 {navItems.map((item) => (

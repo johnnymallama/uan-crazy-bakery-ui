@@ -85,7 +85,7 @@ export function EditUserDialog({ user, dictionary, onUserUpdated }: EditUserDial
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon" className="h-8 w-8">
           <Pencil className="h-4 w-4" />
         </Button>
       </DialogTrigger>

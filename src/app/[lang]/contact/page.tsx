@@ -11,7 +11,7 @@ export default async function ContactPage({
   const dictionary = await getDictionary(lang);
   return (
     <div className="w-full min-h-[calc(100vh-8rem)] flex items-center justify-center p-4">
-      <ContactForm dictionary={dictionary.contactForm} />
+      <ContactForm dictionary={dictionary.contactForm} lang={lang} />
     </div>
   );
 }

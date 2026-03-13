@@ -18,9 +18,9 @@ export default async function LangLayout({
   return (
     <Providers>
       <LocationProvider>
-        <Header lang={params.lang} dictionary={dictionary.navigation} />
+        <Header lang={params.lang} />
         <main className="flex-grow">{children}</main>
-        <Footer lang={params.lang} />
+        <Footer lang={params.lang} navigation={dictionary.navigation} privacy={dictionary.privacy} terms={dictionary.terms} />
         <Toaster />
       </LocationProvider>
     </Providers>

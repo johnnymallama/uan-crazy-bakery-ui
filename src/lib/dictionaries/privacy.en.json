@@ -1,0 +1,19 @@
+{
+  "privacy": {
+    "linkLabel": "Privacy Policy",
+    "title": "Privacy Policy",
+    "welcome": "Welcome to Dulce Manía's privacy policy. Your privacy is important to us.",
+    "info": {
+      "title": "Information We Collect",
+      "p1": "We collect information you provide directly to us, such as your name, email address, and mailing address when you register or place an order."
+    },
+    "howWeUse": {
+      "title": "How We Use Your Information",
+      "p1": "We use the information we collect to process your orders, communicate with you, and improve our services."
+    },
+    "sharing": {
+      "title": "How We Share Your Information",
+      "p1": "We do not share your personal information with third parties, except when necessary to complete your order (for example, with our shipping partners)."
+    }
+  }
+}

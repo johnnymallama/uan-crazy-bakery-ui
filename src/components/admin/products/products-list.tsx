@@ -10,14 +10,18 @@ import EditProductDialog from './edit-product-dialog';
 import AddProductDialog from './add-product-dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table';
-import { Trash2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Trash2, PackageOpen } from 'lucide-react';
 
-const productTypes = [
-  "BIZCOCHO",
-  "RELLENO",
-  "COBERTURA"
-];
+const productTypes = ["BIZCOCHO", "RELLENO", "COBERTURA"];
+
+const typeColors: Record<string, string> = {
+  BIZCOCHO: 'bg-amber-100 text-amber-800 border-amber-200',
+  RELLENO:  'bg-rose-100 text-rose-800 border-rose-200',
+  COBERTURA:'bg-teal-100 text-teal-800 border-teal-200',
+};
 
 interface ProductsListProps {
   dictionary: Dictionary;
@@ -32,16 +36,14 @@ export default function ProductsList({ dictionary }: ProductsListProps) {
 
   const fetchProducts = async (type: string | null = selectedType) => {
     try {
-      const fetchedProducts = type ? await getProductsByType(type) : await getProducts();
-      setProducts(fetchedProducts);
-    } catch (error) {
+      const fetched = type ? await getProductsByType(type) : await getProducts();
+      setProducts(fetched);
+    } catch {
       toast({ description: dictionary.adminProductsPage.productsTable.toast.fetchError, variant: 'destructive' });
     }
   };
 
-  useEffect(() => {
-    fetchProducts(selectedType);
-  }, [selectedType]);
+  useEffect(() => { fetchProducts(selectedType); }, [selectedType]);
 
   const handleTypeSelect = (type: string | null) => {
     setSelectedType(type);
@@ -53,132 +55,147 @@ export default function ProductsList({ dictionary }: ProductsListProps) {
       await deleteProduct(id);
       toast({ description: dictionary.adminProductsPage.productsTable.toast.deleteSuccess });
       fetchProducts();
-    } catch (error) {
+    } catch {
       toast({ description: dictionary.adminProductsPage.productsTable.toast.deleteError, variant: 'destructive' });
     }
   };
 
   const totalPages = Math.ceil(products.length / itemsPerPage);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const paginatedProducts = products.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const paginatedProducts = products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div className="md:col-span-1">
-            <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4 space-y-4">
-                <h3 className="text-xl font-headline">{dictionary.adminProductsPage.ingredientTypes.title}</h3>
-                <div className="flex flex-col space-y-2">
+    <TooltipProvider>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+        {/* Sidebar filtros */}
+        <aside className="md:col-span-1">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">{dictionary.adminProductsPage.ingredientTypes.title}</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col space-y-1 pt-0">
+              <Button
+                variant={selectedType === null ? 'default' : 'ghost'}
+                onClick={() => handleTypeSelect(null)}
+                className="justify-start"
+              >
+                {dictionary.adminProductsPage.ingredientTypes.all}
+              </Button>
+              {productTypes.map(type => (
                 <Button
-                    variant={selectedType === null ? 'default' : 'ghost'}
-                    onClick={() => handleTypeSelect(null)}
-                    className="justify-start"
+                  key={type}
+                  variant={selectedType === type ? 'default' : 'ghost'}
+                  onClick={() => handleTypeSelect(type)}
+                  className="justify-start"
                 >
-                    {dictionary.adminProductsPage.ingredientTypes.all}
+                  {type}
                 </Button>
-                {productTypes.map(type => (
-                    <Button
-                        key={type}
-                        variant={selectedType === type ? 'default' : 'ghost'}
-                        onClick={() => handleTypeSelect(type)}
-                        className="justify-start"
-                    >
-                        {type}
-                    </Button>
-                ))}
-                </div>
-            </div>
-        </div>
-      <div className="md:col-span-3">
-        <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-headline">{dictionary.adminProductsPage.productsTable.title}</h2>
-            <AddProductDialog dictionary={dictionary} onProductAdded={() => fetchProducts(selectedType)} />
-        </div>
-        <div className="rounded-md border">
-            <Table>
-            <TableHeader>
-                <TableRow>
-                <TableHead>{dictionary.adminProductsPage.productsTable.headers.name}</TableHead>
-                <TableHead>{dictionary.adminProductsPage.productsTable.headers.composition}</TableHead>
-                <TableHead>{dictionary.adminProductsPage.productsTable.headers.type}</TableHead>
-                <TableHead>{dictionary.adminProductsPage.productsTable.headers.value}</TableHead>
-                <TableHead className="text-right">{dictionary.adminProductsPage.productsTable.headers.actions}</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {paginatedProducts.length > 0 ? (
-                paginatedProducts.map(product => (
-                    <TableRow key={product.id} className="hover:bg-muted/50">
-                    <TableCell className="font-medium">{product.nombre}</TableCell>
-                    <TableCell>{product.composicion}</TableCell>
-                    <TableCell>{product.tipoIngrediente}</TableCell>
-                    <TableCell>{product.costoPorGramo}</TableCell>
-                    <TableCell className="text-right">
-                        <EditProductDialog dictionary={dictionary} product={product} onProductUpdated={() => fetchProducts(selectedType)} />
-                        <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                            <Button variant="destructive" size="icon" className="ml-2">
-                            <Trash2 className="h-4 w-4" />
-                            </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                            <AlertDialogTitle>{dictionary.adminProductsPage.deleteProductModal.title.replace('{productName}', product.nombre)}</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                {dictionary.adminProductsPage.deleteProductModal.description}
-                            </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                            <AlertDialogCancel>{dictionary.adminProductsPage.deleteProductModal.buttons.cancel}</AlertDialogCancel>
-                            <AlertDialogAction onClick={() => handleDelete(product.id)}>{dictionary.adminProductsPage.deleteProductModal.buttons.delete}</AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                        </AlertDialog>
-                    </TableCell>
-                    </TableRow>
-                ))
-                ) : (
-                    <TableRow>
-                        <TableCell colSpan={5} className="h-24 text-center">
-                            {dictionary.adminProductsPage.productsTable.noProducts}
+              ))}
+            </CardContent>
+          </Card>
+        </aside>
+
+        {/* Tabla principal */}
+        <main className="md:col-span-3">
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>{dictionary.adminProductsPage.productsTable.title}</CardTitle>
+                <AddProductDialog dictionary={dictionary} onProductAdded={() => fetchProducts(selectedType)} />
+              </div>
+            </CardHeader>
+            <CardContent className="p-0">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-primary/10 hover:bg-primary/10">
+                    <TableHead className="font-semibold text-foreground">{dictionary.adminProductsPage.productsTable.headers.name}</TableHead>
+                    <TableHead className="font-semibold text-foreground">{dictionary.adminProductsPage.productsTable.headers.composition}</TableHead>
+                    <TableHead className="font-semibold text-foreground">{dictionary.adminProductsPage.productsTable.headers.type}</TableHead>
+                    <TableHead className="font-semibold text-foreground text-right">{dictionary.adminProductsPage.productsTable.headers.value}</TableHead>
+                    <TableHead className="font-semibold text-foreground text-right">{dictionary.adminProductsPage.productsTable.headers.actions}</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {paginatedProducts.length > 0 ? (
+                    paginatedProducts.map((product, i) => (
+                      <TableRow key={product.id} className={i % 2 === 0 ? 'bg-background' : 'bg-muted/30'}>
+                        <TableCell className="font-medium">{product.nombre}</TableCell>
+                        <TableCell className="text-muted-foreground text-sm">{product.composicion}</TableCell>
+                        <TableCell>
+                          <Badge className={`${typeColors[product.tipoIngrediente] ?? 'bg-gray-100 text-gray-800'} border text-xs font-medium`} variant="outline">
+                            {product.tipoIngrediente}
+                          </Badge>
                         </TableCell>
+                        <TableCell className="text-right font-mono text-sm">${product.costoPorGramo}</TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex justify-end gap-1">
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <span>
+                                  <EditProductDialog dictionary={dictionary} product={product} onProductUpdated={() => fetchProducts(selectedType)} />
+                                </span>
+                              </TooltipTrigger>
+                              <TooltipContent><p>{dictionary.adminProductsPage.productsTable.actions.tooltips.edit}</p></TooltipContent>
+                            </Tooltip>
+                            <AlertDialog>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <AlertDialogTrigger asChild>
+                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10">
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  </AlertDialogTrigger>
+                                </TooltipTrigger>
+                                <TooltipContent><p>{dictionary.adminProductsPage.productsTable.actions.tooltips.delete}</p></TooltipContent>
+                              </Tooltip>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>{dictionary.adminProductsPage.deleteProductModal.title.replace('{productName}', product.nombre)}</AlertDialogTitle>
+                                  <AlertDialogDescription>{dictionary.adminProductsPage.deleteProductModal.description}</AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>{dictionary.adminProductsPage.deleteProductModal.buttons.cancel}</AlertDialogCancel>
+                                  <AlertDialogAction onClick={() => handleDelete(product.id)}>{dictionary.adminProductsPage.deleteProductModal.buttons.delete}</AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={5} className="h-32 text-center">
+                        <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                          <PackageOpen className="h-8 w-8" />
+                          <span>{dictionary.adminProductsPage.productsTable.noProducts}</span>
+                        </div>
+                      </TableCell>
                     </TableRow>
-                )}
-            </TableBody>
-            </Table>
-        </div>
-        {totalPages > 1 && (
-            <div className="flex justify-end items-center mt-4">
-            <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-            >
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
+          {/* Paginación */}
+          {totalPages > 1 && (
+            <div className="flex justify-end items-center gap-2 mt-4">
+              <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => p - 1)} disabled={currentPage === 1}>
                 {dictionary.adminProductsPage.productsTable.pagination.previous}
-            </Button>
-            <span className="mx-2 text-sm">
+              </Button>
+              <span className="text-sm text-muted-foreground px-2">
                 {dictionary.adminProductsPage.productsTable.pagination.page
-                .replace("{currentPage}", currentPage.toString())
-                .replace("{totalPages}", totalPages.toString())}
-            </span>
-            <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-            >
+                  .replace('{currentPage}', currentPage.toString())
+                  .replace('{totalPages}', totalPages.toString())}
+              </span>
+              <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => p + 1)} disabled={currentPage === totalPages}>
                 {dictionary.adminProductsPage.productsTable.pagination.next}
-            </Button>
+              </Button>
             </div>
-        )}
+          )}
+        </main>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }
