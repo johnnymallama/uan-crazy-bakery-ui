@@ -39,6 +39,7 @@ export function OrdersList({ dictionary }: OrdersListProps) {
   const [isCancelModalOpen, setCancelModalOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
     if (user?.uid) {
@@ -56,8 +57,9 @@ export function OrdersList({ dictionary }: OrdersListProps) {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  const totalPages = Math.ceil(orders.length / rowsPerPage);
-  const paginatedOrders = orders.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+  const filteredOrders = selectedStatus ? orders.filter(o => o.estado === selectedStatus) : orders;
+  const totalPages = Math.ceil(filteredOrders.length / rowsPerPage);
+  const paginatedOrders = filteredOrders.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
   const formatDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString('es-ES', {
@@ -67,8 +69,52 @@ export function OrdersList({ dictionary }: OrdersListProps) {
   const isCancelDisabled = (status: string) =>
     ['EN_PROCESO', 'LISTO', 'ENTREGADO', 'CANCELADO'].includes(status);
 
+  const handleStatusFilter = (status: string | null) => {
+    setSelectedStatus(status);
+    setPage(1);
+  };
+
   return (
     <TooltipProvider>
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
+
+        {/* Card de filtros por estado */}
+        <Card className="w-full lg:w-56 shrink-0">
+          <CardContent className="p-4">
+            <p className="text-sm font-semibold mb-3">Filtrar por estado</p>
+            <div className="flex flex-col gap-1">
+              <button
+                onClick={() => handleStatusFilter(null)}
+                className={cn(
+                  'text-left text-sm px-3 py-2 rounded-md transition-colors',
+                  selectedStatus === null
+                    ? 'bg-primary text-primary-foreground font-medium'
+                    : 'hover:bg-muted text-muted-foreground'
+                )}
+              >
+                Todos
+              </button>
+              {Object.keys(statusColors).map(status => (
+                <button
+                  key={status}
+                  onClick={() => handleStatusFilter(status)}
+                  className={cn(
+                    'text-left text-sm px-3 py-2 rounded-md transition-colors flex items-center gap-2',
+                    selectedStatus === status
+                      ? 'bg-primary text-primary-foreground font-medium'
+                      : 'hover:bg-muted text-muted-foreground'
+                  )}
+                >
+                  <span className={cn('inline-block w-2 h-2 rounded-full border', statusColors[status])} />
+                  {status.replace('_', ' ')}
+                </button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Tabla + paginación */}
+        <div className="flex-1 min-w-0">
       <Card>
         <CardContent className="p-0">
           <Table>
@@ -77,6 +123,7 @@ export function OrdersList({ dictionary }: OrdersListProps) {
                 <TableHead className="font-semibold text-foreground">{dictionary.consumerOrders.table.headers.order}</TableHead>
                 <TableHead className="font-semibold text-foreground">{dictionary.consumerOrders.table.headers.status}</TableHead>
                 <TableHead className="font-semibold text-foreground">{dictionary.consumerOrders.table.headers.date}</TableHead>
+                <TableHead className="font-semibold text-foreground text-right">Total</TableHead>
                 <TableHead className="font-semibold text-foreground text-right">{dictionary.consumerOrders.table.headers.actions}</TableHead>
               </TableRow>
             </TableHeader>
@@ -89,8 +136,9 @@ export function OrdersList({ dictionary }: OrdersListProps) {
                 </TableRow>
               ) : paginatedOrders.length > 0 ? (
                 paginatedOrders.map((order, i) => (
+                  <Tooltip key={order.id}>
+                    <TooltipTrigger asChild>
                   <TableRow
-                    key={order.id}
                     onClick={() => { setSelectedOrder(order); setDetailsModalOpen(true); }}
                     className={cn('cursor-pointer hover:bg-primary/5', i % 2 === 0 ? 'bg-background' : 'bg-muted/30')}
                   >
@@ -101,6 +149,9 @@ export function OrdersList({ dictionary }: OrdersListProps) {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">{formatDate(order.fecha)}</TableCell>
+                    <TableCell className="text-right font-mono font-semibold text-sm">
+                      {order.valorTotal != null ? `$${order.valorTotal.toLocaleString('es-CO')}` : '—'}
+                    </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
                         <Tooltip>
@@ -135,10 +186,15 @@ export function OrdersList({ dictionary }: OrdersListProps) {
                       </div>
                     </TableCell>
                   </TableRow>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">
+                      <p>Haz clic para ver el detalle del pedido</p>
+                    </TooltipContent>
+                  </Tooltip>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={4} className="h-32 text-center">
+                  <TableCell colSpan={5} className="h-32 text-center">
                     <div className="flex flex-col items-center gap-2 text-muted-foreground">
                       <ShoppingBag className="h-8 w-8" />
                       <span>{dictionary.consumerOrders.table.noOrders}</span>
@@ -178,6 +234,9 @@ export function OrdersList({ dictionary }: OrdersListProps) {
           </Button>
         </div>
       </div>
+
+        </div>{/* fin col derecha */}
+      </div>{/* fin flex principal */}
 
       <OrderDetailsModal isOpen={isDetailsModalOpen} onClose={() => setDetailsModalOpen(false)} order={selectedOrder} dictionary={dictionary} />
       <NotesModal isOpen={isNoteModalOpen} onClose={() => setNoteModalOpen(false)} order={selectedOrder} onNoteAdded={() => { setNoteModalOpen(false); fetchData(); }} dictionary={dictionary} />

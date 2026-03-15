@@ -230,8 +230,8 @@ export function OrderWizardModal({
   };
 
   const handleFinishAndSeeOrder = () => {
-    handleOpenChange(false);
-    router.push(`/${lang}/account`); // o la ruta que corresponda
+    setIsOpen(false);
+    setTimeout(() => router.push(`/${lang}/dashboard/consumer/orders`), 200);
   }
 
   // --- Lógica de Renderizado ---

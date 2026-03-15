@@ -9,8 +9,9 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { useEffect, useState } from 'react';
-import { OrderData } from '../order-wizard-modal'; // Importamos el tipo desde el modal
+import { OrderData } from '../order-wizard-modal';
 import { calcularCostoPedido } from '@/lib/apis/costo-api';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 type FullDictionary = Awaited<ReturnType<typeof getDictionary>>;
 
@@ -106,31 +107,9 @@ export function SummaryStep({ dictionary, orderData, shippingData, onQuantityCha
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-h-[calc(90vh-200px)] overflow-y-auto p-1">
-      {/* Columna Izquierda: Visual y Personalización */}
-      <div className="space-y-6">
-         <Card>
-          <CardHeader><CardTitle>{t.visualProposal}</CardTitle></CardHeader>
-          <CardContent>
-            {orderData.imageProposalData?.imageUrl ? (
-              <>
-                <Image
-                    src={orderData.imageProposalData.imageUrl}
-                    alt="Propuesta visual del pastel"
-                    width={500}
-                    height={500}
-                    className="rounded-lg object-cover w-full aspect-square"
-                />
-                <p className="text-xs text-muted-foreground mt-2 text-center">{t.visualProposalDisclaimer}</p>
-              </>
-            ) : (
-              <p className="text-sm text-muted-foreground">No se generó ninguna imagen.</p>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-h-[calc(90vh-200px)] overflow-y-auto p-1">
 
-      {/* Columna Derecha: Detalles del Producto, Envío y Precios */}
+      {/* Columna Izquierda: Detalles del producto + Envío */}
       <div className="space-y-6">
         <Card>
           <CardHeader><CardTitle>{t.productDetails}</CardTitle></CardHeader>
@@ -142,45 +121,37 @@ export function SummaryStep({ dictionary, orderData, shippingData, onQuantityCha
             <DetailItem label={t.filling} value={orderData.filling?.nombre} />
             <DetailItem label={t.coverage} value={orderData.coverage?.nombre} />
             <Separator />
-            {/* Selector de Cantidad */}
             <div className="space-y-2">
-                <Label htmlFor="quantity">{t.quantity}</Label>
-                {orderData.recipeType.nombre === 'TORTA' ? (
-                    <Input
-                        id="quantity"
-                        type="number"
-                        min="1"
-                        value={orderData.quantity}
-                        onChange={(e) => onQuantityChange(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                        className="w-24"
-                    />
-                ) : (
-                    <Select
-                        value={String(orderData.quantity)}
-                        onValueChange={(value) => onQuantityChange(Number(value))}
-                    >
-                        <SelectTrigger className="w-48">
-                            <SelectValue placeholder="Selecciona cantidad" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="6">Caja de 6</SelectItem>
-                            <SelectItem value="12">Caja de 12</SelectItem>
-                            <SelectItem value="24">Caja de 24</SelectItem>
-                        </SelectContent>
-                    </Select>
-                )}
-                <p className='text-xs text-muted-foreground'>
-                    {orderData.recipeType.nombre === 'TORTA' ? t.cakeQuantityHelpText : t.cupcakeQuantityHelpText.replace('{quantity}', String(orderData.quantity))}
-                </p>
+              <Label htmlFor="quantity">{t.quantity}</Label>
+              {orderData.recipeType.nombre === 'TORTA' ? (
+                <Input
+                  id="quantity"
+                  type="number"
+                  min="1"
+                  value={orderData.quantity}
+                  onChange={(e) => onQuantityChange(Math.max(1, parseInt(e.target.value, 10) || 1))}
+                  className="w-24"
+                />
+              ) : (
+                <Select
+                  value={String(orderData.quantity)}
+                  onValueChange={(value) => onQuantityChange(Number(value))}
+                >
+                  <SelectTrigger className="w-48">
+                    <SelectValue placeholder="Selecciona cantidad" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="6">Caja de 6</SelectItem>
+                    <SelectItem value="12">Caja de 12</SelectItem>
+                    <SelectItem value="24">Caja de 24</SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+              <p className="text-xs text-muted-foreground">
+                {orderData.recipeType.nombre === 'TORTA' ? t.cakeQuantityHelpText : t.cupcakeQuantityHelpText.replace('{quantity}', String(orderData.quantity))}
+              </p>
             </div>
           </CardContent>
-        </Card>
-
-        <Card>
-            <CardHeader><CardTitle>{t.customization}</CardTitle></CardHeader>
-            <CardContent>
-                <p className='text-sm text-muted-foreground'>{orderData.customization}</p>
-            </CardContent>
         </Card>
 
         <Card>
@@ -191,32 +162,64 @@ export function SummaryStep({ dictionary, orderData, shippingData, onQuantityCha
             <DetailItem label={t.phone} value={shippingData.telefono} />
           </CardContent>
         </Card>
-        
-        {/* Tarjeta de Precios */}
+      </div>
+
+      {/* Columna Derecha: Precios + Imagen y Personalización colapsados */}
+      <div className="space-y-6">
         <Card>
-            <CardHeader><CardTitle>{t.priceDetails}</CardTitle></CardHeader>
-            <CardContent className="space-y-3">
-                {isLoading ? (
-                    <p className="text-sm text-muted-foreground">{t.calculatingPrice}...</p>
-                ) : error ? (
-                    <p className="text-sm text-red-500">{error}</p>
-                ) : (
-                    <>
-                        <DetailItem label={t.productCost} value={productCost} isCurrency />
-                        <DetailItem label={t.shippingCost} value={shippingCost} isCurrency />
-                        <Separator />
-                        <div className="flex justify-between font-bold text-lg">
-                            <p>{t.totalCost}:</p>
-                            {totalCost !== null ? (
-                               <p className="font-mono">${totalCost.toLocaleString('es-CO')}</p>
-                            ) : null}
-                        </div>
-                    </>
-                )}
-            </CardContent>
+          <CardHeader><CardTitle>{t.priceDetails}</CardTitle></CardHeader>
+          <CardContent className="space-y-3">
+            {isLoading ? (
+              <p className="text-sm text-muted-foreground">{t.calculatingPrice}...</p>
+            ) : error ? (
+              <p className="text-sm text-red-500">{error}</p>
+            ) : (
+              <>
+                <DetailItem label={t.productCost} value={productCost} isCurrency />
+                <DetailItem label={t.shippingCost} value={shippingCost} isCurrency />
+                <Separator />
+                <div className="flex justify-between font-bold text-lg">
+                  <p>{t.totalCost}:</p>
+                  {totalCost !== null ? (
+                    <p className="font-mono">${totalCost.toLocaleString('es-CO')}</p>
+                  ) : null}
+                </div>
+              </>
+            )}
+          </CardContent>
         </Card>
 
+        <Card>
+          <CardContent className="pt-4 pb-2 px-4">
+            <Accordion type="multiple" className="w-full">
+              {orderData.imageProposalData?.imageUrl && (
+                <AccordionItem value="imagen" className="border-b">
+                  <AccordionTrigger className="text-sm font-semibold">{t.visualProposal}</AccordionTrigger>
+                  <AccordionContent>
+                    <Image
+                      src={orderData.imageProposalData.imageUrl}
+                      alt="Propuesta visual del pastel"
+                      width={500}
+                      height={500}
+                      className="rounded-lg object-cover w-full aspect-square"
+                    />
+                    <p className="text-xs text-muted-foreground mt-2 text-center">{t.visualProposalDisclaimer}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+              {orderData.customization && (
+                <AccordionItem value="personalizacion" className="border-0">
+                  <AccordionTrigger className="text-sm font-semibold">{t.customization}</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-sm text-muted-foreground">{orderData.customization}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+            </Accordion>
+          </CardContent>
+        </Card>
       </div>
+
     </div>
   );
 }
