@@ -181,6 +181,10 @@
       "orderManagement": {
         "title": "Order Management",
         "description": "Manage the different states and details of the orders."
+      },
+      "reports": {
+        "title": "Reports",
+        "description": "Generate and consult analytical reports of the system."
       }
     }
   },

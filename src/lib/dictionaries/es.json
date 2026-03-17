@@ -181,6 +181,10 @@
       "orderManagement": {
         "title": "Gestión de Pedidos",
         "description": "Gestionar los diferentes estados y detalles de los pedidos."
+      },
+      "reports": {
+        "title": "Reportes",
+        "description": "Generar y consultar reportes analíticos del sistema."
       }
     }
   },
