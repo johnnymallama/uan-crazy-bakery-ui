@@ -80,7 +80,17 @@ export function RegisterStep({ dictionary, onRegisterSuccess }: RegisterStepProp
       };
 
       await createUser(userData);
-      
+
+      const sessionResponse = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uid: firebaseUser.uid }),
+      });
+
+      if (!sessionResponse.ok) {
+        throw new Error('Failed to create session after registration');
+      }
+
       toast({ title: dictionary.registerForm.toast.title });
       onRegisterSuccess();
 
